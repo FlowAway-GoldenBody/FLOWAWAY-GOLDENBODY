@@ -1,3 +1,5 @@
+"use strict";
+
 // in JSON code name to display text
 console.log('utils active');
 zbUtils.comparelist2 = [

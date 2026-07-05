@@ -1,3 +1,5 @@
+"use strict";
+
 (async () => {
 console.log('active');
   function calcChance(probability) {

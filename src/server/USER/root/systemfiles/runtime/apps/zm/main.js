@@ -1,3 +1,5 @@
+"use strict";
+
 window.zmGlobals = window.zmGlobals || {};
 window.zmGlobals.allzmInstances = window.zmGlobals.allzmInstances || [];
 (async () => {
@@ -1283,7 +1285,6 @@ const loadPromise = (async () => {
   async function enterGame(zmcd, cdIndex) {
     lobby.mainimg.setVisible(false);
     eval(window.zmGlobals.cigScript);
-    continueInGame(zmcd, cdIndex);
   }
   (async () => {
   eval(window.zmGlobals.tooltipscript);

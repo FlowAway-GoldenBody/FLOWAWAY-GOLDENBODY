@@ -1,3 +1,5 @@
+"use strict";
+
 async function continueInGame(zmcd, cdIndex) {
     let bagInfo = {};
     let zmUtils = {};
@@ -702,3 +704,4 @@ async function continueInGame(zmcd, cdIndex) {
     curminimap.addChild(zmUtils.saveBtn);
     curminimap.addChild(bagBtn);
 }
+    continueInGame(zmcd, cdIndex);
