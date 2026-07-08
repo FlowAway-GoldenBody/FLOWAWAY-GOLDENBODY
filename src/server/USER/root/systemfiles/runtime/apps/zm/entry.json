@@ -1,10 +1,10 @@
 {
-  "functionname": "zm",
+  "functionName": "zm",
   "label": "ZM",
-  "globalvarobjectstring": "zmGlobals",
-  "allapparraystring": "allzmInstances",
-  "usejs": true,
+  "globalVarObjectString": "zmGlobals",
+  "allAppArrayString": "allzmInstances",
+  "requestAdminPerm": true,
   "jsFile": "main.js",
   "iconFile": "icon.txt",
-  "openfilecapability": [".zmcd"]
+  "openfileCapability": [".zmcd"]
 }
