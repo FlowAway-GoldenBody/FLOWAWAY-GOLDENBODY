@@ -1,5 +1,5 @@
 "use strict";
-
+let instance = {};
 async function continueInGame(zmcd, cdIndex) {
     let bagInfo = {};
     let zmUtils = {};
@@ -84,12 +84,12 @@ async function continueInGame(zmcd, cdIndex) {
     // }
     async function qhdisplayChance (obj) {
         if (qhChance) { qhChance.remove(); qhChance = null; }
-        qhChance = await drawText(obj.displayChance, 0.02, "white", "ThinFont", 'left', 1, { fontPath: "/systemfiles/runtime/apps/zm/assets/thinFont.ttf", fontFamily: 'ThinFont' });
+        qhChance = await drawText(obj.displayChance, 0.02, "white", "ThinFont", 'left', 1, { fontPath: "assets/thinFont.ttf", fontFamily: 'ThinFont' });
         qhChance.setPosition(0.44461077844311375, 0.29238605881246615);
         exposeOutside.qhtableImg.addChild(qhChance);
         // this also display the lh needed for this
         if (lhConsumptionDisplay) { lhConsumptionDisplay.remove(); lhConsumptionDisplay = null; }
-        lhConsumptionDisplay = await drawText(parseInt(obj.lhneeded), 0.02, "white", "ThinFont", 'left', 1, { fontPath: "/systemfiles/runtime/apps/zm/assets/thinFont.ttf", fontFamily: 'ThinFont' });
+        lhConsumptionDisplay = await drawText(parseInt(obj.lhneeded), 0.02, "white", "ThinFont", 'left', 1, { fontPath: "assets/thinFont.ttf", fontFamily: 'ThinFont' });
         lhConsumptionDisplay.setPosition(0.27694610778443113, 0.29238605881246615);
         exposeOutside.qhtableImg.addChild(lhConsumptionDisplay);
     }
@@ -138,7 +138,7 @@ async function continueInGame(zmcd, cdIndex) {
     ldlCache.curdjItemsToRender = zmcd.bagdjsaveobject;
     async function renderLhtext() {
         if (lhText) {lhText.remove(); lhText = null;}
-        lhText = await drawText(zmcd.lhValue, 0.04, "white", "ThinFont", "left", 1, { fontPath: "/systemfiles/runtime/apps/zm/assets/thinFont.ttf", fontFamily: 'ThinFont' });
+        lhText = await drawText(zmcd.lhValue, 0.04, "white", "ThinFont", "left", 1, { fontPath: "assets/thinFont.ttf", fontFamily: 'ThinFont' });
         lhText.setPosition(0.854, 0.0227);
         bagUI.addChild(lhText);
     }
@@ -204,7 +204,7 @@ async function continueInGame(zmcd, cdIndex) {
 // };
         for (let i = 0; i < 25; i++) {
             let slotNum = startSlot + i;
-            let emptySlot = await drawImage(0.55 + (i % 5) * 0.06, 0.6421 - yindex * 0.095, 0.05, 0.07, "/systemfiles/runtime/apps/zm/assets/zb(emptyslot).png", 0);
+            let emptySlot = await drawImage(0.55 + (i % 5) * 0.06, 0.6421 - yindex * 0.095, 0.05, 0.07, "assets/zb(emptyslot).png", 0);
             emptySlot.isItem = true; // mark as item so we can easily remove later
             bagUI.addChild(emptySlot);
             if (i % 5 === 4) yindex++; // move to next row after every 5 items
@@ -216,7 +216,7 @@ async function continueInGame(zmcd, cdIndex) {
             let slot = itemsToRender[i];
             // only render items for the active player
             if (!slot.cnt && category === 'dj') { continue; }
-            let itemImg = "/systemfiles/runtime/apps/zm/assets/" + category + "/" + slot.name + ".png";
+            let itemImg = "assets/" + category + "/" + slot.name + ".png";
 
             // Create button first without handlers
             const itemButton = await drawButton(0.55 + (renderedCount % 5) * 0.06, 0.6421 - yindex * 0.095, 0.05, 0.07, itemImg, undefined, 
@@ -244,7 +244,7 @@ async function continueInGame(zmcd, cdIndex) {
                             instance.extern.tooltip = null;
                             currentTooltipItem = null;
                             } catch (e) {}
-                            let containerImg = await drawImage(0.305, 0.51, 0.05, 0.074, '/systemfiles/runtime/apps/zm/assets/zb(emptyslot).png');
+                            let containerImg = await drawImage(0.305, 0.51, 0.05, 0.074, 'assets/zb(emptyslot).png');
                             containerImg.locatorID = 'containerImg';
                             ldlCache.qhcurzbonldl = slot;
                             ldlCache.qhcurzbonldlPE = containerImg;
@@ -252,7 +252,7 @@ async function continueInGame(zmcd, cdIndex) {
                             let chanceObj = calcqhprob(slot);
                             qhdisplayChance(chanceObj);
                             } catch(e) {}
-                            let itemBtn = await drawButton(0.305, 0.51, 0.05, 0.074, "/systemfiles/runtime/apps/zm/assets/" + category + "/" + slot.name + ".png", "/systemfiles/runtime/apps/zm/assets/" + category + "/" + slot.name + ".png", () => {
+                            let itemBtn = await drawButton(0.305, 0.51, 0.05, 0.074, "assets/" + category + "/" + slot.name + ".png", "assets/" + category + "/" + slot.name + ".png", () => {
                                 if (ldlCache.qhlastSlotzb) ldlCache.removedzbsaveobject.splice(ldlCache.removedzbsaveobject.indexOf(ldlCache.qhlastSlotzb), 1);
                                 if (ldlCache.qhlastSlotzb) ldlCache.curzbItemsToRender.push(ldlCache.qhlastSlotzb);
                                 itemBtn.parent.remove();
@@ -297,13 +297,13 @@ async function continueInGame(zmcd, cdIndex) {
                                 ldlCache.removeddjsaveobject.push(newSlot);
                                 slot.cnt--;
                                 djSlot.Item = slot;
-                                let containerImg = await drawImage(djSlot.x, djSlot.y, 0.05, 0.074, '/systemfiles/runtime/apps/zm/assets/zb(emptyslot).png');
+                                let containerImg = await drawImage(djSlot.x, djSlot.y, 0.05, 0.074, 'assets/zb(emptyslot).png');
                                 djSlot.PE = containerImg;
                                 try {
                                 let chanceObj = calcqhprob(ldlCache.qhcurzbonldl);
                                 qhdisplayChance(chanceObj);
                                 } catch(e) {}
-                                let itemBtn = await drawButton(djSlot.x, djSlot.y, 0.05, 0.074, "/systemfiles/runtime/apps/zm/assets/" + category + "/" + slot.name + ".png", "/systemfiles/runtime/apps/zm/assets/" + category + "/" + slot.name + ".png", () => {
+                                let itemBtn = await drawButton(djSlot.x, djSlot.y, 0.05, 0.074, "assets/" + category + "/" + slot.name + ".png", "assets/" + category + "/" + slot.name + ".png", () => {
                                     containerImg.remove();
                                     containerImg = null;
                                     slot.cnt++;
@@ -367,10 +367,10 @@ async function continueInGame(zmcd, cdIndex) {
                                 ldlCache.removedzbsaveobject.push(slot);
                                 renderBagItems(curCategory, curPage, ldlCache.curzbItemsToRender);
                                 itemslots[i].Item = slot;
-                                let containerImg = await drawImage(itemslots[i].x, itemslots[i].y, 0.05, 0.074, '/systemfiles/runtime/apps/zm/assets/zb(emptyslot).png');
+                                let containerImg = await drawImage(itemslots[i].x, itemslots[i].y, 0.05, 0.074, 'assets/zb(emptyslot).png');
                                 itemslots[i].PE = containerImg;
                                 exposeOutside.hctableImg.addChild(containerImg);
-                                let itemBtn = await drawButton(itemslots[i].x, itemslots[i].y, 0.05, 0.074, "/systemfiles/runtime/apps/zm/assets/" + category + "/" + slot.name + ".png", "/systemfiles/runtime/apps/zm/assets/" + category + "/" + slot.name + ".png", async () => {
+                                let itemBtn = await drawButton(itemslots[i].x, itemslots[i].y, 0.05, 0.074, "assets/" + category + "/" + slot.name + ".png", "assets/" + category + "/" + slot.name + ".png", async () => {
                                     containerImg.remove();
                                     containerImg = null;
                                     exposeOutside.removehcPreview();
@@ -419,10 +419,10 @@ async function continueInGame(zmcd, cdIndex) {
                                     ldlCache.removeddjsaveobject.push(slotCopy);
                                     renderBagItems(curCategory, curPage, ldlCache.curdjItemsToRender);
                                     itemslots[i].Item = slot;
-                                    let containerImg = await drawImage(itemslots[i].x, itemslots[i].y, 0.05, 0.074, '/systemfiles/runtime/apps/zm/assets/zb(emptyslot).png');
+                                    let containerImg = await drawImage(itemslots[i].x, itemslots[i].y, 0.05, 0.074, 'assets/zb(emptyslot).png');
                                     itemslots[i].PE = containerImg;
                                     exposeOutside.hctableImg.addChild(containerImg);
-                                    let itemBtn = await drawButton(itemslots[i].x, itemslots[i].y, 0.05, 0.074, "/systemfiles/runtime/apps/zm/assets/" + category + "/" + slot.name + ".png", "/systemfiles/runtime/apps/zm/assets/" + category + "/" + slot.name + ".png", async () => {
+                                    let itemBtn = await drawButton(itemslots[i].x, itemslots[i].y, 0.05, 0.074, "assets/" + category + "/" + slot.name + ".png", "assets/" + category + "/" + slot.name + ".png", async () => {
                                         containerImg.remove();
                                         containerImg = null;
                                         exposeOutside.removehcPreview();
@@ -464,7 +464,7 @@ async function continueInGame(zmcd, cdIndex) {
             1 // zindex
             );
             if (slot.cnt) {
-                let cntElement = await drawText(slot.cnt, 0.02, "orange", "InfoFont", "right", { fontPath: "/systemfiles/runtime/apps/zm/assets/infoFont.ttf", fontFamily: "InfoFont" });
+                let cntElement = await drawText(slot.cnt, 0.02, "orange", "InfoFont", "right", { fontPath: "assets/infoFont.ttf", fontFamily: "InfoFont" });
                 cntElement.setPosition(itemButton.x + itemButton.width - 0.003, itemButton.y);
                 itemButton.addChild(cntElement);
             }
@@ -513,15 +513,15 @@ async function continueInGame(zmcd, cdIndex) {
             const gap = 0.005;
             const btnW = 0.0307;
             const xPos = baseX + index * (btnW + gap);
-            let btn = await drawButton(xPos, 0.1789, btnW, 0.0316, `/systemfiles/runtime/apps/zm/assets/zb(page${pageNum}).png`, `/systemfiles/runtime/apps/zm/assets/zb(page${pageNum})(hover).png`, () => {
+            let btn = await drawButton(xPos, 0.1789, btnW, 0.0316, `assets/zb(page${pageNum}).png`, `assets/zb(page${pageNum})(hover).png`, () => {
                 // handle page button click
-                btn.setImage(`/systemfiles/runtime/apps/zm/assets/zb(page${pageNum})(hover).png`);
+                btn.setImage(`assets/zb(page${pageNum})(hover).png`);
                 removeBagItems();
                 renderBagItems(curCategory, pageNum, ldlCache[`cur${curCategory}ItemsToRender`]);
                 clearOtherCategoryButtons(pageButtons, btn);
                 curPage = pageNum;
             });
-            btn.defaultImage = `/systemfiles/runtime/apps/zm/assets/zb(page${pageNum}).png`;
+            btn.defaultImage = `assets/zb(page${pageNum}).png`;
             pageButtons.push(btn);
             bagUI.addChild(btn);
         }
@@ -540,16 +540,16 @@ async function continueInGame(zmcd, cdIndex) {
             const gap = 0.005;
             const btnW = 0.0697;
             const xPos = baseX + index * (btnW + gap);
-            let btn = await drawButton(xPos, 0.7383, btnW, 0.0407, `/systemfiles/runtime/apps/zm/assets/zb(cat)(${cat}).png`, `/systemfiles/runtime/apps/zm/assets/zb(cat)(${cat})(hover).png`, () => {
+            let btn = await drawButton(xPos, 0.7383, btnW, 0.0407, `assets/zb(cat)(${cat}).png`, `assets/zb(cat)(${cat})(hover).png`, () => {
                 // handle category button click
-                btn.setImage(`/systemfiles/runtime/apps/zm/assets/zb(cat)(${cat})(hover).png`);
+                btn.setImage(`assets/zb(cat)(${cat})(hover).png`);
                 clearOtherCategoryButtons(categoryButtons, btn);
                 curCategory = cat;
                 renderBagItems(cat, curPage, ldlCache[`cur${curCategory}ItemsToRender`]);
             });
             categoryButtons.push(btn);
             bagUI.addChild(btn);
-            btn.defaultImage = `/systemfiles/runtime/apps/zm/assets/zb(cat)(${cat}).png`;
+            btn.defaultImage = `assets/zb(cat)(${cat}).png`;
             if (cat === "zb") btn.onClick();
         }
         return categoryButtons;
@@ -567,29 +567,29 @@ async function continueInGame(zmcd, cdIndex) {
         btn.setH(btn.height - 0.02);
     }
 
-    let curminimap = await drawImage(0, 0, 1, 1, "/systemfiles/runtime/apps/zm/assets/187.jpg", 10, { noParent: true });
-    zmUtils.saveBtn = await drawButton(0.0013, 0.0096, 0.0675, 0.117, "/systemfiles/runtime/apps/zm/assets/saveGame.png", "/systemfiles/runtime/apps/zm/assets/saveGame(hover).png", async () => {
+    let curminimap = await drawImage(0, 0, 1, 1, "assets/187.jpg", 10, { noParent: true });
+    zmUtils.saveBtn = await drawButton(0.0013, 0.0096, 0.0675, 0.117, "assets/saveGame.png", "assets/saveGame(hover).png", async () => {
         let hasError = false;
         try {
-            await window.protectedGlobals.WriteFile("/systemfiles/runtime/apps/zm/data/" + `cd#(${cdIndex})` + ".json", btoa(JSON.stringify(zmcd)));
+            await window.protectedGlobals.writeFile("data/" + `cd#(${cdIndex})` + ".json", btoa(JSON.stringify(zmcd)));
         } catch (e) {
             hasError = true;
         }
         if (!hasError) {
-            let img = await drawImage(0.395, 0.215, 0.233, 0.099, "/systemfiles/runtime/apps/zm/assets/saveSuccessful.png");
+            let img = await drawImage(0.395, 0.215, 0.233, 0.099, "assets/saveSuccessful.png");
             curminimap.addChild(img);
             setTimeout(() => {
                 img.remove();
             }, 2000);
         } else {
-            let img = await drawImage(0.395, 0.215, 0.233, 0.099, "/systemfiles/runtime/apps/zm/assets/saveFailed.png");
+            let img = await drawImage(0.395, 0.215, 0.233, 0.099, "assets/saveFailed.png");
             curminimap.addChild(img);
             setTimeout(() => {
                 img.remove();
             }, 2000);
         }
     });
-    let exitBtn = await drawButton(0.48, 0.0117, 0.0685, 0.106, "/systemfiles/runtime/apps/zm/assets/inGame(exit).png", "/systemfiles/runtime/apps/zm/assets/inGame(exit)(hover).png", () => {
+    let exitBtn = await drawButton(0.48, 0.0117, 0.0685, 0.106, "assets/inGame(exit).png", "assets/inGame(exit)(hover).png", () => {
         lobby.mainimg.setVisible(true);
         curminimap.remove();
     });
@@ -606,7 +606,7 @@ async function continueInGame(zmcd, cdIndex) {
         instance.extern.tooltipShowing = true;
         let createdTooltip = null;
         try {
-            createdTooltip = await drawImage(posX, posY, info.width, info.height, '/systemfiles/runtime/apps/zm/assets/zb/itemtooltip2.png', 1.1);
+            createdTooltip = await drawImage(posX, posY, info.width, info.height, 'assets/zb/itemtooltip2.png', 1.1);
         } catch (e) {
             // loading failed (e.g. image couldn't be read). Ensure state is cleaned up and do not leave a stale flag.
             // only clear tooltipShowing if no newer tooltip request was made
@@ -646,18 +646,18 @@ async function continueInGame(zmcd, cdIndex) {
         instance.extern.tooltipShowing = false;
         return null;
     };
-    let bagBtn = await drawButton(0.1377, 0.0173, 0.0685, 0.106, "/systemfiles/runtime/apps/zm/assets/inGame(ldl).png", "/systemfiles/runtime/apps/zm/assets/inGame(ldl)(hover).png", async () => {
+    let bagBtn = await drawButton(0.1377, 0.0173, 0.0685, 0.106, "assets/inGame(ldl).png", "assets/inGame(ldl)(hover).png", async () => {
         if (bagUI) return; // prevent multiple bagUIs from being opened
         curPage = 1;
         curCategory = 'zb';
-        bagUI = await drawImage(0,0,1,1,"/systemfiles/runtime/apps/zm/assets/ldlGui.png");
+        bagUI = await drawImage(0,0,1,1,"assets/ldlGui.png");
         renderLhtext();
         eval(window.zmGlobals.ldlScript);
         curminimap.children.forEach(child => {
             if (child.setDisableAccess) child.setDisableAccess(true);
         });
         curminimap.addChild(bagUI);
-        let closeBagBtn = await drawButton(0.91, 0.9225, 0.058, 0.04, "/systemfiles/runtime/apps/zm/assets/ldl(return).png", "/systemfiles/runtime/apps/zm/assets/ldl(return)(hover).png", () => {
+        let closeBagBtn = await drawButton(0.91, 0.9225, 0.058, 0.04, "assets/ldl(return).png", "assets/ldl(return)(hover).png", () => {
             bagUI.remove();
             bagUI = null;
             exposeOutside.clearLdlState();
@@ -672,7 +672,7 @@ async function continueInGame(zmcd, cdIndex) {
         let btn1enlarged = false;
         let btn2enlarged = false;
         let character2Btn = null;
-        let character1Btn = await drawButton(0.0389,0.9105,0.0594,0.0491,`/systemfiles/runtime/apps/zm/assets/ldl(${zmcd.player1}).png`,undefined, () => {
+        let character1Btn = await drawButton(0.0389,0.9105,0.0594,0.0491,`assets/ldl(${zmcd.player1}).png`,undefined, () => {
             activeplayer = 1;
             if(!btn1enlarged) {
                 enlargechbtn(character1Btn);
@@ -688,7 +688,7 @@ async function continueInGame(zmcd, cdIndex) {
         bagUI.addChild(character1Btn);
         character1Btn.onClick();
         if (zmcd.player2) {
-        character2Btn = await drawButton(0.1389,0.9105,0.0594,0.0491,`/systemfiles/runtime/apps/zm/assets/ldl(${zmcd.player2}).png`,undefined, () => {
+        character2Btn = await drawButton(0.1389,0.9105,0.0594,0.0491,`assets/ldl(${zmcd.player2}).png`,undefined, () => {
             activeplayer = 2;
             if(!btn2enlarged) {
                 enlargechbtn(character2Btn);

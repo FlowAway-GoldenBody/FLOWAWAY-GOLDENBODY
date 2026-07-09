@@ -38,29 +38,29 @@ function getItemHC(s) {
     }
 }
 exposeOutside.renderhcPreview = async (slots) => {
-    containerImg = await drawImage(0.2986526946107784, 0.4138813859152698, 0.05, 0.074, '/systemfiles/runtime/apps/zm/assets/zb(emptyslot).png');
+    containerImg = await drawImage(0.2986526946107784, 0.4138813859152698, 0.05, 0.074, 'assets/zb(emptyslot).png');
     let s = '';
     slots.forEach(slot => s+=slot.Item.name);
     let item = getItemHC(s);
-    let itemImg = await drawImage(0.2986526946107784, 0.4138813859152698, 0.05, 0.074, `/systemfiles/runtime/apps/zm/assets/${item.putBackLocation}/${item.result.name}.png`);
+    let itemImg = await drawImage(0.2986526946107784, 0.4138813859152698, 0.05, 0.074, `assets/${item.putBackLocation}/${item.result.name}.png`);
     exposeOutside.hctableImg.addChild(containerImg);
     containerImg.addChild(itemImg);
-    let chancetxt = await drawText('100%', 0.02, 'white', 'ThinFont', 'left', 1, { fontPath: "/systemfiles/runtime/apps/zm/assets/thinFont.ttf", fontFamily: 'ThinFont' });
+    let chancetxt = await drawText('100%', 0.02, 'white', 'ThinFont', 'left', 1, { fontPath: "assets/thinFont.ttf", fontFamily: 'ThinFont' });
     chancetxt.setPosition(0.45434131736526945, 0.34712571168296014);
     exposeOutside.hctableImg.addChild(chancetxt);
-    let lhtxt = await drawText('10000', 0.02, 'white', 'ThinFont', 'left', 1, { fontPath: "/systemfiles/runtime/apps/zm/assets/thinFont.ttf", fontFamily: 'ThinFont' });
+    let lhtxt = await drawText('10000', 0.02, 'white', 'ThinFont', 'left', 1, { fontPath: "assets/thinFont.ttf", fontFamily: 'ThinFont' });
     lhtxt.setPosition(0.36002994011976047, 0.2857104913892351);
     exposeOutside.hctableImg.addChild(lhtxt);
     try {
         gethcNameText().remove();
     } catch (e) {}
-    let nametxt = await drawText(zbUtils.lookupStats(item.result.name, { x: 0, y: 0 }, item.result).result, 0.02, 'white', 'ThinFont', 'left', 1, { fontPath: "/systemfiles/runtime/apps/zm/assets/thinFont.ttf", fontFamily: 'ThinFont' });
+    let nametxt = await drawText(zbUtils.lookupStats(item.result.name, { x: 0, y: 0 }, item.result).result, 0.02, 'white', 'ThinFont', 'left', 1, { fontPath: "assets/thinFont.ttf", fontFamily: 'ThinFont' });
     nametxt.setPosition(0.32110778443113774, 0.3444554847136677);
     exposeOutside.hctableImg.addChild(nametxt);
     gethcNameText = () => {return nametxt};
 };
 exposeOutside.renderhcReal = async (slots) => {
-    containerImg2 = await drawImage(0.1998502994011976, 0.2977265127510509, 0.05, 0.074, '/systemfiles/runtime/apps/zm/assets/zb(emptyslot).png');
+    containerImg2 = await drawImage(0.1998502994011976, 0.2977265127510509, 0.05, 0.074, 'assets/zb(emptyslot).png');
     let s = '';
     slots.forEach(slot => s+=slot.Item.name);
     let item = getItemHC(s);
@@ -68,7 +68,7 @@ exposeOutside.renderhcReal = async (slots) => {
     let slot = item.result;
     if (zmcd.lhValue < 10000) {alert('灵魂不够'); return}
     exposeOutside.deductLh(10000);
-    let itemBtn = await drawButton(0.1998502994011976, 0.2977265127510509, 0.05, 0.074, `/systemfiles/runtime/apps/zm/assets/${item.putBackLocation}/${item.result.name}.png`, `/systemfiles/runtime/apps/zm/assets/${item.putBackLocation}/${item.result.name}.png`, async () => {
+    let itemBtn = await drawButton(0.1998502994011976, 0.2977265127510509, 0.05, 0.074, `assets/${item.putBackLocation}/${item.result.name}.png`, `assets/${item.putBackLocation}/${item.result.name}.png`, async () => {
         try {
         instance.extern.tooltip.remove();
         instance.extern.tooltip = null;
@@ -139,15 +139,15 @@ function disableOtherModes(mode) {
 }
 let menuCoords = { x: 0.1402, y: 0.1821, w: 0.3757, h: 0.564 };
 let btnCoords = { x: 0.058, y: 0.0235, w: 0.045, h: 0.0345 };
-let qhbtn = await drawButton(btnCoords.x, btnCoords.y, btnCoords.w, btnCoords.h, '/systemfiles/runtime/apps/zm/assets/ldlassets/qh.png', '/systemfiles/runtime/apps/zm/assets/ldlassets/qh(hover).png', async () => {
+let qhbtn = await drawButton(btnCoords.x, btnCoords.y, btnCoords.w, btnCoords.h, 'assets/ldlassets/qh.png', 'assets/ldlassets/qh(hover).png', async () => {
     if (exposeOutside.qhtableImg?.isConnected) return;
-    qhbtn.setImage('/systemfiles/runtime/apps/zm/assets/ldlassets/qh(hover).png');
-    qhbtn.baseImage = '/systemfiles/runtime/apps/zm/assets/ldlassets/qh.png';
-    exposeOutside.qhtableImg = await drawImage(menuCoords.x, menuCoords.y, menuCoords.w, menuCoords.h, '/systemfiles/runtime/apps/zm/assets/ldlassets/qhtable.png');
+    qhbtn.setImage('assets/ldlassets/qh(hover).png');
+    qhbtn.baseImage = 'assets/ldlassets/qh.png';
+    exposeOutside.qhtableImg = await drawImage(menuCoords.x, menuCoords.y, menuCoords.w, menuCoords.h, 'assets/ldlassets/qhtable.png');
 bagUI.addChild(exposeOutside.qhtableImg);
     disableOtherModes(1);
     exposeOutside.curLdlMode = 1;
-    let qhproceedbtn = await drawButton(0.267, 0.199, 0.143, 0.074, '/systemfiles/runtime/apps/zm/assets/ldlassets/qhproceedbtn.png', '/systemfiles/runtime/apps/zm/assets/ldlassets/qhproceedbtn(hover).png', async () => {
+    let qhproceedbtn = await drawButton(0.267, 0.199, 0.143, 0.074, 'assets/ldlassets/qhproceedbtn.png', 'assets/ldlassets/qhproceedbtn(hover).png', async () => {
         let calcresult = calcqhprob(ldlCache.qhcurzbonldl);
         let succeed = calcChance(calcresult.realChance);
         let lhneeded = calcresult.lhneeded;
@@ -185,15 +185,15 @@ qhbtn.onClick();
 
 
 
-let hcbtn = await drawButton(btnCoords.x + 0.08, btnCoords.y, btnCoords.w, btnCoords.h, '/systemfiles/runtime/apps/zm/assets/ldlassets/hc.png', '/systemfiles/runtime/apps/zm/assets/ldlassets/hc(hover).png', async () => {
-    hcbtn.setImage('/systemfiles/runtime/apps/zm/assets/ldlassets/hc(hover).png');
-    hcbtn.baseImage = '/systemfiles/runtime/apps/zm/assets/ldlassets/hc.png';
+let hcbtn = await drawButton(btnCoords.x + 0.08, btnCoords.y, btnCoords.w, btnCoords.h, 'assets/ldlassets/hc.png', 'assets/ldlassets/hc(hover).png', async () => {
+    hcbtn.setImage('assets/ldlassets/hc(hover).png');
+    hcbtn.baseImage = 'assets/ldlassets/hc.png';
     if (exposeOutside.hctableImg?.isConnected) return;
-exposeOutside.hctableImg = await drawImage(menuCoords.x, menuCoords.y, menuCoords.w, menuCoords.h, '/systemfiles/runtime/apps/zm/assets/ldlassets/hctable.png');
+exposeOutside.hctableImg = await drawImage(menuCoords.x, menuCoords.y, menuCoords.w, menuCoords.h, 'assets/ldlassets/hctable.png');
 bagUI.addChild(exposeOutside.hctableImg);
     disableOtherModes(2);
     exposeOutside.curLdlMode = 2;
-    let hcproceedbtn = await drawButton(0.273, 0.194, 0.143, 0.074, '/systemfiles/runtime/apps/zm/assets/ldlassets/hcproceedbtn.png', '/systemfiles/runtime/apps/zm/assets/ldlassets/hcproceedbtn(hover).png', async () => {
+    let hcproceedbtn = await drawButton(0.273, 0.194, 0.143, 0.074, 'assets/ldlassets/hcproceedbtn.png', 'assets/ldlassets/hcproceedbtn(hover).png', async () => {
         let haveItems = 0;
         ldlCache.hcitemslots.forEach(e => { if(e.Item) haveItems++; });
         if (haveItems < 3) return;

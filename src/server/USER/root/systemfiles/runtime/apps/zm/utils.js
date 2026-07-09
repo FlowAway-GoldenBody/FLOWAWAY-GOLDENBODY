@@ -154,7 +154,7 @@ zbUtils.renderStats = async (obj, displayobj, displaypos = {X: 0, Y: 0}) => {
         explicitFamily,
         "left",
         1,
-        { fontPath: "/systemfiles/runtime/apps/zm/assets/infoFont.ttf", fontFamily: explicitFamily }
+        { fontPath: "assets/infoFont.ttf", fontFamily: explicitFamily }
     );
     itemName.setPosition(baseX, baseY - wordMove * dy); // position text at top center of tooltip
     instance.extern.tooltip.addChild(itemName);
@@ -169,7 +169,7 @@ zbUtils.renderStats = async (obj, displayobj, displaypos = {X: 0, Y: 0}) => {
             explicitFamily,
             "left",
             1,
-            { fontPath: "/systemfiles/runtime/apps/zm/assets/infoFont.ttf", fontFamily: explicitFamily }
+            { fontPath: "assets/infoFont.ttf", fontFamily: explicitFamily }
         );
         itemName.setPosition(baseX, baseY - wordMove * dy); // position text at top center of tooltip
         instance.extern.tooltip.addChild(itemName);
@@ -185,7 +185,7 @@ zbUtils.renderStats = async (obj, displayobj, displaypos = {X: 0, Y: 0}) => {
             explicitFamily,
             "left",
             1,
-            { fontPath: "/systemfiles/runtime/apps/zm/assets/infoFont.ttf", fontFamily: explicitFamily }
+            { fontPath: "assets/infoFont.ttf", fontFamily: explicitFamily }
         );
         itemName.setPosition(baseX, baseY - wordMove * dy); // position text at top center of tooltip
         instance.extern.tooltip.addChild(itemName);
@@ -199,7 +199,7 @@ zbUtils.renderStats = async (obj, displayobj, displaypos = {X: 0, Y: 0}) => {
             explicitFamily,
             "left",
             1,
-            { fontPath: "/systemfiles/runtime/apps/zm/assets/infoFont.ttf", fontFamily: explicitFamily }
+            { fontPath: "assets/infoFont.ttf", fontFamily: explicitFamily }
         );
         itemName.setPosition(baseX, baseY - wordMove * dy); // position text at top center of tooltip
         instance.extern.tooltip.addChild(itemName);
@@ -213,7 +213,7 @@ zbUtils.renderStats = async (obj, displayobj, displaypos = {X: 0, Y: 0}) => {
             explicitFamily,
             "left",
             1,
-            { fontPath: "/systemfiles/runtime/apps/zm/assets/infoFont.ttf", fontFamily: explicitFamily }
+            { fontPath: "assets/infoFont.ttf", fontFamily: explicitFamily }
         );
         itemName.setPosition(baseX, baseY - wordMove * dy); // position text at top center of tooltip
         instance.extern.tooltip.addChild(itemName);
@@ -227,7 +227,7 @@ zbUtils.renderStats = async (obj, displayobj, displaypos = {X: 0, Y: 0}) => {
             explicitFamily,
             "left",
             1,
-            { fontPath: "/systemfiles/runtime/apps/zm/assets/infoFont.ttf", fontFamily: explicitFamily }
+            { fontPath: "assets/infoFont.ttf", fontFamily: explicitFamily }
         );
         itemName.setPosition(baseX, baseY - wordMove * dy); // position text at top center of tooltip
         instance.extern.tooltip.addChild(itemName);
@@ -247,7 +247,7 @@ zbUtils.renderStats = async (obj, displayobj, displaypos = {X: 0, Y: 0}) => {
             explicitFamily,
             "left",
             1,
-            { fontPath: "/systemfiles/runtime/apps/zm/assets/infoFont.ttf", fontFamily: explicitFamily }
+            { fontPath: "assets/infoFont.ttf", fontFamily: explicitFamily }
         );
         itemName.setPosition(baseX, baseY - wordMove * dy); // position text at top center of tooltip
         instance.extern.tooltip.addChild(itemName);
@@ -278,7 +278,7 @@ zbUtils.renderStats = async (obj, displayobj, displaypos = {X: 0, Y: 0}) => {
             explicitFamily,
             "left",
             1,
-            { fontPath: "/systemfiles/runtime/apps/zm/assets/infoFont.ttf", fontFamily: explicitFamily }
+            { fontPath: "assets/infoFont.ttf", fontFamily: explicitFamily }
         );
         itemName.setPosition(baseX, baseY - wordMove * dy); // position text at top center of tooltip
         instance.extern.tooltip.addChild(itemName);
@@ -292,7 +292,7 @@ zbUtils.renderStats = async (obj, displayobj, displaypos = {X: 0, Y: 0}) => {
             explicitFamily,
             "left",
             1,
-            { fontPath: "/systemfiles/runtime/apps/zm/assets/infoFont.ttf", fontFamily: explicitFamily }
+            { fontPath: "assets/infoFont.ttf", fontFamily: explicitFamily }
         );
         itemName.setPosition(baseX, baseY - wordMove * dy); // position text at top center of tooltip
         instance.extern.tooltip.addChild(itemName);
@@ -306,7 +306,7 @@ zbUtils.renderStats = async (obj, displayobj, displaypos = {X: 0, Y: 0}) => {
             explicitFamily,
             "left",
             1,
-            { fontPath: "/systemfiles/runtime/apps/zm/assets/infoFont.ttf", fontFamily: explicitFamily }
+            { fontPath: "assets/infoFont.ttf", fontFamily: explicitFamily }
         );
         itemName.setPosition(baseX, baseY - wordMove * dy); // position text at top center of tooltip
         instance.extern.tooltip.addChild(itemName);
@@ -320,7 +320,7 @@ zbUtils.renderStats = async (obj, displayobj, displaypos = {X: 0, Y: 0}) => {
             explicitFamily,
             "left",
             1,
-            { fontPath: "/systemfiles/runtime/apps/zm/assets/infoFont.ttf", fontFamily: explicitFamily }
+            { fontPath: "assets/infoFont.ttf", fontFamily: explicitFamily }
         );
         itemName.setPosition(baseX, baseY - wordMove * dy); // position text at top center of tooltip
         instance.extern.tooltip.addChild(itemName);
@@ -334,7 +334,7 @@ zbUtils.renderStats = async (obj, displayobj, displaypos = {X: 0, Y: 0}) => {
             explicitFamily,
             "left",
             1,
-            { fontPath: "/systemfiles/runtime/apps/zm/assets/infoFont.ttf", fontFamily: explicitFamily }
+            { fontPath: "assets/infoFont.ttf", fontFamily: explicitFamily }
         );
         itemName.setPosition(baseX, baseY - wordMove * dy); // position text at top center of tooltip
         instance.extern.tooltip.addChild(itemName);
@@ -348,7 +348,7 @@ zbUtils.renderStats = async (obj, displayobj, displaypos = {X: 0, Y: 0}) => {
             explicitFamily,
             "left",
             1,
-            { fontPath: "/systemfiles/runtime/apps/zm/assets/infoFont.ttf", fontFamily: explicitFamily }
+            { fontPath: "assets/infoFont.ttf", fontFamily: explicitFamily }
         );
         itemName.setPosition(baseX, baseY - wordMove * dy); // position text at top center of tooltip
         instance.extern.tooltip.addChild(itemName);
@@ -362,7 +362,7 @@ zbUtils.renderStats = async (obj, displayobj, displaypos = {X: 0, Y: 0}) => {
             explicitFamily,
             "left",
             1,
-            { fontPath: "/systemfiles/runtime/apps/zm/assets/infoFont.ttf", fontFamily: explicitFamily }
+            { fontPath: "assets/infoFont.ttf", fontFamily: explicitFamily }
         );
         itemName.setPosition(baseX, baseY - wordMove * dy); // position text at top center of tooltip
         instance.extern.tooltip.addChild(itemName);
@@ -376,7 +376,7 @@ zbUtils.renderStats = async (obj, displayobj, displaypos = {X: 0, Y: 0}) => {
             explicitFamily,
             "left",
             1,
-            { fontPath: "/systemfiles/runtime/apps/zm/assets/infoFont.ttf", fontFamily: explicitFamily }
+            { fontPath: "assets/infoFont.ttf", fontFamily: explicitFamily }
         );
         itemName.setPosition(baseX, baseY - wordMove * dy); // position text at top center of tooltip
         instance.extern.tooltip.addChild(itemName);
@@ -390,7 +390,7 @@ zbUtils.renderStats = async (obj, displayobj, displaypos = {X: 0, Y: 0}) => {
             explicitFamily,
             "left",
             1,
-            { fontPath: "/systemfiles/runtime/apps/zm/assets/infoFont.ttf", fontFamily: explicitFamily }
+            { fontPath: "assets/infoFont.ttf", fontFamily: explicitFamily }
         );
         itemName.setPosition(baseX, baseY - wordMove * dy); // position text at top center of tooltip
         instance.extern.tooltip.addChild(itemName);
@@ -404,7 +404,7 @@ zbUtils.renderStats = async (obj, displayobj, displaypos = {X: 0, Y: 0}) => {
             explicitFamily,
             "left",
             1,
-            { fontPath: "/systemfiles/runtime/apps/zm/assets/infoFont.ttf", fontFamily: explicitFamily }
+            { fontPath: "assets/infoFont.ttf", fontFamily: explicitFamily }
         );
         itemName.setPosition(baseX, baseY - wordMove * dy); // position text at top center of tooltip
         instance.extern.tooltip.addChild(itemName);
@@ -419,7 +419,7 @@ zbUtils.renderStats = async (obj, displayobj, displaypos = {X: 0, Y: 0}) => {
                 explicitFamily,
                 "left",
                 1,
-                { fontPath: "/systemfiles/runtime/apps/zm/assets/infoFont.ttf", fontFamily: explicitFamily }
+                { fontPath: "assets/infoFont.ttf", fontFamily: explicitFamily }
             );
             itemName.setPosition(baseX, baseY - wordMove * dy); // position text at top center of tooltip
             instance.extern.tooltip.addChild(itemName);
@@ -442,7 +442,7 @@ zbUtils.renderStats = async (obj, displayobj, displaypos = {X: 0, Y: 0}) => {
             explicitFamily,
             "left",
             1,
-            { fontPath: "/systemfiles/runtime/apps/zm/assets/infoFont.ttf", fontFamily: explicitFamily }
+            { fontPath: "assets/infoFont.ttf", fontFamily: explicitFamily }
         );
         itemName.setPosition(baseX, baseY - wordMove * dy); // position text at top center of tooltip
         instance.extern.tooltip.addChild(itemName);

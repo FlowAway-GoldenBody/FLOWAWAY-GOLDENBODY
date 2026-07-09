@@ -1,46 +1,34 @@
 "use strict";
-
+window.protectedGlobals = window.__goldenbodyAPI;
 window.zmGlobals = window.zmGlobals || {};
 window.zmGlobals.allzmInstances = window.zmGlobals.allzmInstances || [];
 (async () => {
-  window.zmGlobals.scriptText = await window.protectedGlobals.ReadFile("/systemfiles/runtime/apps/zm/utils.js", { text: true, direct: true });
-  window.zmGlobals.cigScript = await window.protectedGlobals.ReadFile("/systemfiles/runtime/apps/zm/inGame.js", { text: true, direct: true });
-  window.zmGlobals.tooltipscript = await window.protectedGlobals.ReadFile("/systemfiles/runtime/apps/zm/displayItemTooltip.js", { text: true, direct: true });
-  window.zmGlobals.ldlScript = await window.protectedGlobals.ReadFile('/systemfiles/runtime/apps/zm/ldlFunction.js', { text: true, direct: true });
+  window.zmGlobals.scriptText = await window.protectedGlobals.readFile("utils.js", { text: true, direct: true });
+  window.zmGlobals.cigScript = await window.protectedGlobals.readFile("inGame.js", { text: true, direct: true });
+  window.zmGlobals.tooltipscript = await window.protectedGlobals.readFile("displayItemTooltip.js", { text: true, direct: true });
+  window.zmGlobals.ldlScript = await window.protectedGlobals.readFile('ldlFunction.js', { text: true, direct: true });
 })();
 
-window.zm = function (posX = 50, posY = 50) {
-  if (posX == 50 && posY == 50) {
-    let pos = window.protectedGlobals.getNextWindowXY();
-    posX = pos.x;
-    posY = pos.y;
-  }
-  if (window.protectedGlobals.data.username !== "183115428") {alert('Access Denied'); return;}
-  var root = window.protectedGlobals.apptools.createRoot("zm", posX, posY);
-  var topbar = window.protectedGlobals.apptools.createtitlebar(root);
-
-  var instance = window.protectedGlobals.apptools.api.createAppInstance({
-    rootElement: root,
-    title: "ZM",
-    btnMax: topbar ? topbar.querySelector(".btnMaxColor") : null,
-  });
   let curMusic = null;
   async function playMusic(path) {
     curMusic?.pause();
     curMusic = null;
-    let bytes = await window.protectedGlobals.ReadFile(path, { buffer: true, direct: true });
+    debugger;
+    let bytes = await window.protectedGlobals.readFile(path, { buffer: true, direct: true });
     let blob = new Blob([bytes], { type: "audio/mpeg" });
     let url = URL.createObjectURL(blob);
     let audio = new Audio(url);
     // make it replay when it ends
     audio.loop = true;
-    audio.play();
+    document.addEventListener("pointerdown", () => {
+      audio.play();
+    }, { once: true });
     curMusic = audio;
     return audio;
   }
 
   async function playSoundEffect(path) {
-    let bytes = await window.protectedGlobals.ReadFile(path, { buffer: true, direct: true });
+    let bytes = await window.protectedGlobals.readFile(path, { buffer: true, direct: true });
     let blob = new Blob([bytes], { type: "audio/mpeg" });
     let url = URL.createObjectURL(blob);
     let audio = new Audio(url);
@@ -68,13 +56,13 @@ window.zm = function (posX = 50, posY = 50) {
     let lobby = {};
 
   async function renderzm() {
-    playMusic("/systemfiles/runtime/apps/zm/assets/main.mp3").catch((e) => {
+    playMusic("assets/main.mp3").catch((e) => {
       console.error("Failed to play music", e);
     });
 
     // helpers
     let canvas = document.createElement("canvas");
-    root.appendChild(canvas);
+    document.body.appendChild(canvas);
 
     const ctx = canvas.getContext("2d");
 
@@ -90,8 +78,8 @@ window.zm = function (posX = 50, posY = 50) {
     };
     function getLogicalSize() {
       return {
-        width: root.clientWidth,
-        height: root.clientHeight - 30,
+        width: document.body.clientWidth,
+        height: document.body.clientHeight - 30,
       };
     }
 
@@ -167,7 +155,7 @@ const loadPromise = (async () => {
     let objectUrl;
 
     try {
-      const bytes = await window.protectedGlobals.ReadFile(path, {
+      const bytes = await window.protectedGlobals.readFile(path, {
         buffer: true,
         direct: true,
       });
@@ -227,7 +215,7 @@ const loadPromise = (async () => {
       }
 
       const loadPromise = (async () => {
-        const bytes = await window.protectedGlobals.ReadFile(path, { buffer: true, direct: true });
+        const bytes = await window.protectedGlobals.readFile(path, { buffer: true, direct: true });
         const blob = new Blob([bytes], { type: "font/ttf" });
         const url = URL.createObjectURL(blob);
 
@@ -477,7 +465,7 @@ const loadPromise = (async () => {
         undefined,
         "left",
         0,
-        { fontPath: "/systemfiles/runtime/apps/zm/assets/infoFont.ttf", fontFamily: "" }
+        { fontPath: "assets/infoFont.ttf", fontFamily: "" }
     );
   drawText(
         "",
@@ -486,10 +474,10 @@ const loadPromise = (async () => {
         undefined,
         "left",
         0,
-        { fontPath: "/systemfiles/runtime/apps/zm/assets/thinFont.ttf", fontFamily: "-" }
+        { fontPath: "assets/thinFont.ttf", fontFamily: "-" }
     );
   drawImage(
-    0,0,0,0,"/systemfiles/runtime/apps/zm/assets/saveFailed.png"
+    0,0,0,0,"assets/saveFailed.png"
   );
     async function drawButton(x, y, width, height, imgPath, hoverImgPath = null, onClick = () => {}, zIndex = 0, options = {}) {
       const button = {
@@ -872,7 +860,7 @@ const loadPromise = (async () => {
         return !!d.parent;
       }
 
-      // Only include root drawables that do NOT require a parent.
+      // Only include document.body drawables that do NOT require a parent.
       const roots = drawables.filter((d) => !isChild(d) && !d.requireParent).slice();
       roots.sort((a, b) => (a.zIndex !== b.zIndex ? a.zIndex - b.zIndex : a.id - b.id));
       const list = [];
@@ -1007,7 +995,7 @@ const loadPromise = (async () => {
     let mainpageui = {};
     ctx.imageSmoothingEnabled = true;
     ctx.imageSmoothingQuality = "high";
-    lobby.mainimg = await drawImage(0, 0, 1, 1, "/systemfiles/runtime/apps/zm/assets/zm.png", -1, { noParent: true });
+    lobby.mainimg = await drawImage(0, 0, 1, 1, "assets/zm.png", -1, { noParent: true });
     function disableOtherToolbarBtns(btn) {
       // disable all buttons in the toolbar except btn, which now it includes xdksbtn and dqcdbtn
       if (btn === lobby.xdksbtn) {
@@ -1048,8 +1036,8 @@ const loadPromise = (async () => {
       disableOtherToolbarBtns(lobby.xdksbtn);
       // Implementation for showing xdks UI
       hideAllLobbyUI();
-      mainpageui.xdksoverlay = await drawImage(0, 0, 1, 1, "/systemfiles/runtime/apps/zm/assets/blackbackground.png", 1, {noParent: true});
-      rebuildbtn = await drawButton(0.675, 0.016, 0.107, 0.075, "/systemfiles/runtime/apps/zm/assets/xdks(fhzcd).png", "/systemfiles/runtime/apps/zm/assets/xdks(fhzcd)(hover).png", () => {
+      mainpageui.xdksoverlay = await drawImage(0, 0, 1, 1, "assets/blackbackground.png", 1, {noParent: true});
+      rebuildbtn = await drawButton(0.675, 0.016, 0.107, 0.075, "assets/xdks(fhzcd).png", "assets/xdks(fhzcd)(hover).png", () => {
         mainpageui.xdksoverlay.remove();
         // rebuildbtn.remove();
         showAllLobbyUI();
@@ -1058,7 +1046,7 @@ const loadPromise = (async () => {
       }, 20);
       mainpageui.xdksoverlay.addChild(rebuildbtn);
       // draw the start button at the middle of the x of the screen, the y is the same as rebuild, it will be wider than the rebuild one
-      let startbtn = await drawButton(0.5 - 0.125 / 2, 0.018, 0.125, 0.075, "/systemfiles/runtime/apps/zm/assets/xdks(start).png", "/systemfiles/runtime/apps/zm/assets/xdks(start)(hover).png", async () => {
+      let startbtn = await drawButton(0.5 - 0.125 / 2, 0.018, 0.125, 0.075, "assets/xdks(start).png", "assets/xdks(start)(hover).png", async () => {
         if (!clicked[0] && !clicked[1]) {
           alert("Please select at least one character");
         }
@@ -1088,18 +1076,18 @@ const loadPromise = (async () => {
       let player1Image = null;
       let player2Image = null;
       for (let i = 1; i <= 5; i++) {
-        let charbtn = await drawButton(baseCoordinates.x + (i-1)*dx, baseCoordinates.y, baseCoordinates.w, baseCoordinates.h, `/systemfiles/runtime/apps/zm/assets/xdks(${i}).png`, `/systemfiles/runtime/apps/zm/assets/xdks(${i})(hover).png`, async () => {
+        let charbtn = await drawButton(baseCoordinates.x + (i-1)*dx, baseCoordinates.y, baseCoordinates.w, baseCoordinates.h, `assets/xdks(${i}).png`, `assets/xdks(${i})(hover).png`, async () => {
             // if two slots already occupied and this button is not one of them, ignore
             if (((clicked[0] && clicked[1]) && clicked[0] !== charbtn && clicked[1] !== charbtn) || i === 5) return;
             // disable hover visuals while toggling
             charbtn.setHoverEffect(false);
-            const hoverPath = `/systemfiles/runtime/apps/zm/assets/xdks(${i})(hover).png`;
-            const normalPath = `/systemfiles/runtime/apps/zm/assets/xdks(${i}).png`;
+            const hoverPath = `assets/xdks(${i})(hover).png`;
+            const normalPath = `assets/xdks(${i}).png`;
             if(!clicked[0] && `${i}-2P` !== clickedPayload[0] && `${i}-2P` !== clickedPayload[1]) {
               clicked[0] = charbtn;
               await charbtn.setImage(hoverPath);
               if (player1Image) player1Image.remove();
-              player1Image = await drawImage(charbtn.x+0.07, 0.15+0.689, 0.081, 0.079, "/systemfiles/runtime/apps/zm/assets/1P.png", 2);
+              player1Image = await drawImage(charbtn.x+0.07, 0.15+0.689, 0.081, 0.079, "assets/1P.png", 2);
               mainpageui.xdksoverlay.addChild(player1Image);
               clickedPayload.push(`${i}-1P`);
             } else if (clicked[0] === charbtn) {
@@ -1132,7 +1120,7 @@ const loadPromise = (async () => {
               clicked[1] = charbtn;
               await charbtn.setImage(hoverPath);
               if (player2Image) player2Image.remove();
-              player2Image = await drawImage(charbtn.x+0.07, 0.15+0.689, 0.081, 0.079, "/systemfiles/runtime/apps/zm/assets/2P.png", 2);
+              player2Image = await drawImage(charbtn.x+0.07, 0.15+0.689, 0.081, 0.079, "assets/2P.png", 2);
               mainpageui.xdksoverlay.addChild(player2Image);
               clickedPayload.push(`${i}-2P`);
             }
@@ -1140,8 +1128,8 @@ const loadPromise = (async () => {
         mainpageui.xdksoverlay.addChild(charbtn);
       }
     }
-    lobby.xdksbtn = await drawButton(0.795,0.71,0.105,0.057,"/systemfiles/runtime/apps/zm/assets/xdks.png","/systemfiles/runtime/apps/zm/assets/xdks1.png", () => {
-      playSoundEffect("/systemfiles/runtime/apps/zm/assets/4_SD_xz.mp3");
+    lobby.xdksbtn = await drawButton(0.795,0.71,0.105,0.057,"assets/xdks.png","assets/xdks1.png", () => {
+      playSoundEffect("assets/4_SD_xz.mp3");
       showxdksUI();
     });
 
@@ -1153,14 +1141,14 @@ const loadPromise = (async () => {
 
     // dqcd
     mainpageui.dqcdui = null;
-    lobby.dqcdbtn = await drawButton(0.793,0.63,0.112,0.058,"/systemfiles/runtime/apps/zm/assets/dqcd.png","/systemfiles/runtime/apps/zm/assets/dqcd1.png", async (options = {}) => {
-      playSoundEffect("/systemfiles/runtime/apps/zm/assets/4_SD_xz.mp3");
+    lobby.dqcdbtn = await drawButton(0.793,0.63,0.112,0.058,"assets/dqcd.png","assets/dqcd1.png", async (options = {}) => {
+      playSoundEffect("assets/4_SD_xz.mp3");
       if (mainpageui.dqcdui) {return;}
       disableOtherToolbarBtns(lobby.dqcdbtn);
-      mainpageui.dqcdui = await drawImage(0.2,0.15,0.63,0.72,"/systemfiles/runtime/apps/zm/assets/dqcdUI2.png");
+      mainpageui.dqcdui = await drawImage(0.2,0.15,0.63,0.72,"assets/dqcdUI2.png");
     lobby.dqcdbtn.addChild(mainpageui.dqcdui);
       if (options.addcd) {mainpageui.dqcdui.parent.parent.bringToFrontRel();}
-      let closeBtn = await drawButton(0.77,0.775,0.04,0.063,"/systemfiles/runtime/apps/zm/assets/dqcdX.png","/systemfiles/runtime/apps/zm/assets/dqcdXHover.png", () => {
+      let closeBtn = await drawButton(0.77,0.775,0.04,0.063,"assets/dqcdX.png","assets/dqcdXHover.png", () => {
         mainpageui.dqcdui.remove();
         mainpageui.dqcdui = null;
         enableOtherToolbarBtns(lobby.dqcdbtn);
@@ -1176,9 +1164,9 @@ const loadPromise = (async () => {
           cd5: {},
           cd6: {}
       };
-      // allcd.cd1.btn = await drawButton(0.245,0.527,0.249,0.116,"/systemfiles/runtime/apps/zm/assets/cd.png","/systemfiles/runtime/apps/zm/assets/cdHover.png");
-      // allcd.cd1.text = await drawImage(0.301,0.561,0.068,0.05,"/systemfiles/runtime/apps/zm/assets/dqcd-0cd.png");
-      // allcd.cd1.number = await drawImage(0.26,0.55,0.037,0.074,"/systemfiles/runtime/apps/zm/assets/cd#(1).png");
+      // allcd.cd1.btn = await drawButton(0.245,0.527,0.249,0.116,"assets/cd.png","assets/cdHover.png");
+      // allcd.cd1.text = await drawImage(0.301,0.561,0.068,0.05,"assets/dqcd-0cd.png");
+      // allcd.cd1.number = await drawImage(0.26,0.55,0.037,0.074,"assets/cd#(1).png");
         // Render 6 CDs in a row, filenames: cd1.png ... cd6.png
         // ht and vt are the horizontal and vertical transformations between each CD
         const baseX = 0.245; // Adjusted base X position for the first CD
@@ -1202,32 +1190,32 @@ const loadPromise = (async () => {
             baseY + pos.dy,
             cdW,
             cdH,
-            `/systemfiles/runtime/apps/zm/assets/cd.png`,
-            `/systemfiles/runtime/apps/zm/assets/cdHover.png`
+            `assets/cd.png`,
+            `assets/cdHover.png`
           );
           if (options.addcd) {
             allcd[`cd${i}`].btn.onClick = async () => {
-              await window.protectedGlobals.WriteFile(`/systemfiles/runtime/apps/zm/data/cd#(${i}).json`, btoa(JSON.stringify(options.payload)));
+              await window.protectedGlobals.writeFile(`data/cd#(${i}).json`, btoa(JSON.stringify(options.payload)));
               closeBtn.onClick();
               rebuildbtn.onClick();
-              enterGame(JSON.parse(await window.protectedGlobals.ReadFile(`/systemfiles/runtime/apps/zm/data/cd#(${i}).json`, { text: true, direct: true })), i);
+              enterGame(JSON.parse(await window.protectedGlobals.readFile(`data/cd#(${i}).json`, { text: true, direct: true })), i);
             }
           }
           else {
             allcd[`cd${i}`].btn.onClick = async () => {
-              enterGame(JSON.parse(await window.protectedGlobals.ReadFile(`/systemfiles/runtime/apps/zm/data/cd#(${i}).json`, { text: true, direct: true })), i);
+              enterGame(JSON.parse(await window.protectedGlobals.readFile(`data/cd#(${i}).json`, { text: true, direct: true })), i);
               closeBtn.onClick();
             }
           }
           mainpageui.dqcdui.addChild(allcd[`cd${i}`].btn);
 
           // Use the raw filesystem path for FileExists/ReadFile (do not percent-encode)
-          const cdJsonPath = `/systemfiles/runtime/apps/zm/data/cd#(${i}).json`;
+          const cdJsonPath = `data/cd#(${i}).json`;
           let cdlabel = null;
           let cdlabel2 = null;
           // ident
-          if (await window.protectedGlobals.ReadFile(cdJsonPath, { text: true, direct: true })) {
-            let cdData = JSON.parse(await window.protectedGlobals.ReadFile(cdJsonPath, { text: true, direct: true }));
+          if (await window.protectedGlobals.readFile(cdJsonPath, { text: true, direct: true })) {
+            let cdData = JSON.parse(await window.protectedGlobals.readFile(cdJsonPath, { text: true, direct: true }));
             let additionalOffset1 = 0;
             let additionalWidth = 0;
             if (cdData.player1 === 2) {additionalOffset1 = 0.017; additionalWidth = 0.032/2 + 0.003;}
@@ -1236,7 +1224,7 @@ const loadPromise = (async () => {
               baseY + pos.dy + 0.034,
               0.05 + additionalWidth,
               0.045,
-              `/systemfiles/runtime/apps/zm/assets/dqcdtxt(${cdData.player1}).png`, 10
+              `assets/dqcdtxt(${cdData.player1}).png`, 10
             );
             allcd[`cd${i}`].btn.addChild(cdlabel);
             cdlabel.bringToFront();
@@ -1248,7 +1236,7 @@ const loadPromise = (async () => {
                 baseY + pos.dy + 0.034,
                 0.05 + additionalWidth,
                 0.045,
-                `/systemfiles/runtime/apps/zm/assets/dqcdtxt(${cdData.player2}).png`, 10
+                `assets/dqcdtxt(${cdData.player2}).png`, 10
               );
               allcd[`cd${i}`].btn.addChild(cdlabel2);
               cdlabel2.bringToFront();
@@ -1259,13 +1247,13 @@ const loadPromise = (async () => {
               baseY + pos.dy + 0.034,
               0.068,
               0.05,
-              `/systemfiles/runtime/apps/zm/assets/dqcd-0cd.png`
+              `assets/dqcd-0cd.png`
             );
           allcd[`cd${i}`].btn.addChild(cdlabel);
           cdlabel.bringToFront();
           }
 
-          const numImgPath = `/systemfiles/runtime/apps/zm/assets/cd#(${i}).png`;
+          const numImgPath = `assets/cd#(${i}).png`;
           let num = allcd[`cd${i}`].number = await drawImage(
             baseX + pos.dx + 0.015,
             baseY + pos.dy + 0.023,
@@ -1306,7 +1294,7 @@ const loadPromise = (async () => {
 
 
     const observer = new ResizeObserver(renderScene);
-    observer.observe(root);
+    observer.observe(document.body);
   }
   renderzm();
 
@@ -2073,25 +2061,3 @@ const loadPromise = (async () => {
     data.bagjssaveobject = [];
     return { ok: true, content: data };
   }
-
-
-
-
-
-
-
-
-
-
-
-  window.protectedGlobals.apptools.api.trackInstance(instance, "zm");
-  let origclose = instance.closeWindow;
-  instance.closeWindow = () => {
-    try {
-    stopAllMusic();
-    } catch {}
-    console.log('stopped');
-    origclose();
-  };
-  return instance;
-};

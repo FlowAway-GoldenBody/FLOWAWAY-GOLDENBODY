@@ -3,7 +3,6 @@
   "label": "ZM",
   "globalVarObjectString": "zmGlobals",
   "allAppArrayString": "allzmInstances",
-  "requestAdminPerm": true,
   "jsFile": "main.js",
   "iconFile": "icon.txt",
   "openfileCapability": [".zmcd"]
