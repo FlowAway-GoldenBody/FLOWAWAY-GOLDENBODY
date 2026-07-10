@@ -1,8 +1,5 @@
 {
-  "functionName": "zm",
   "label": "ZM",
-  "globalVarObjectString": "zmGlobals",
-  "allAppArrayString": "allzmInstances",
   "jsFile": "main.js",
   "id": "ZM",
   "iconFile": "icon.txt",

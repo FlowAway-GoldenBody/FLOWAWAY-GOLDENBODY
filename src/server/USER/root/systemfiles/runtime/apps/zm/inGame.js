@@ -3,6 +3,9 @@ let instance = {};
 async function continueInGame(zmcd, cdIndex) {
     let bagInfo = {};
     let zmUtils = {};
+    setTimeout(() => {
+        window.protectedGlobals.setInstanceTitle(zmUtils.getInstanceTitle(zmcd, cdIndex));
+    }, 1000);
     let curCategory = "zb";
     let curPage = 1;
     let activeplayer = 1;
@@ -592,6 +595,7 @@ async function continueInGame(zmcd, cdIndex) {
     let exitBtn = await drawButton(0.48, 0.0117, 0.0685, 0.106, "assets/inGame(exit).png", "assets/inGame(exit)(hover).png", () => {
         lobby.mainimg.setVisible(true);
         curminimap.remove();
+        window.protectedGlobals.setInstanceTitle("main page");
     });
     let bagUI = null;
     instance.extern = {};

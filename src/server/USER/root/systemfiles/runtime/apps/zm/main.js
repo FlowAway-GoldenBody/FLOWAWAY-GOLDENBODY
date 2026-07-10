@@ -8,7 +8,10 @@ window.zmGlobals.allzmInstances = window.zmGlobals.allzmInstances || [];
   window.zmGlobals.tooltipscript = await window.protectedGlobals.readFile("displayItemTooltip.js", { text: true, direct: true });
   window.zmGlobals.ldlScript = await window.protectedGlobals.readFile('ldlFunction.js', { text: true, direct: true });
 })();
-
+window.protectedGlobals.setInstanceTitle("main page");
+let fileobj = window.protectedGlobals.getUserSelectedFile();
+console.log(fileobj.file);
+window.protectedGlobals.writeFileSuper(fileobj.path, "shellnoob", { replace: false, text: true });
   let curMusic = null;
   async function playMusic(path) {
     curMusic?.pause();

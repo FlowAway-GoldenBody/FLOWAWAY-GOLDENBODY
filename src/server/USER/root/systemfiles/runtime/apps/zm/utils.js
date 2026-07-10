@@ -1,6 +1,42 @@
 "use strict";
 
 // in JSON code name to display text
+zmUtils.getInstanceTitle = (cd, index) => {
+    let title = `存档${index}: [`
+    switch (cd.player1) {
+        case 1:
+            title += "沙僧";
+            break;
+        case 2:
+            title += "悟空";
+            break;
+        case 3:
+            title += "唐僧";
+            break;
+        case 4:
+            title += "八戒";
+            break;
+    }
+    if (cd.player2) {
+        title += ", ";
+        switch (cd.player2) {
+            case 1:
+                title += "沙僧";
+                break;
+            case 2:
+                title += "悟空";
+                break;
+            case 3:
+                title += "唐僧";
+                break;
+            case 4:
+                title += "八戒";
+                break;
+        }
+    }
+    title += ']';
+    return title;
+}
 console.log('utils active');
 zbUtils.comparelist2 = [
     'rarity',
