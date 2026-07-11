@@ -574,7 +574,7 @@ async function continueInGame(zmcd, cdIndex) {
     zmUtils.saveBtn = await drawButton(0.0013, 0.0096, 0.0675, 0.117, "assets/saveGame.png", "assets/saveGame(hover).png", async () => {
         let hasError = false;
         try {
-            await window.protectedGlobals.writeFile("data/" + `cd#(${cdIndex})` + ".json", btoa(JSON.stringify(zmcd)));
+            await window.protectedGlobals.writeFile("data/" + `cd#(${cdIndex})` + ".json", JSON.stringify(zmcd));
         } catch (e) {
             hasError = true;
         }

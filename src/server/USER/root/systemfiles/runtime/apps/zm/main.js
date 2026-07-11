@@ -1198,7 +1198,7 @@ const loadPromise = (async () => {
           );
           if (options.addcd) {
             allcd[`cd${i}`].btn.onClick = async () => {
-              await window.protectedGlobals.writeFile(`data/cd#(${i}).json`, btoa(JSON.stringify(options.payload)));
+              await window.protectedGlobals.writeFile(`data/cd#(${i}).json`, JSON.stringify(options.payload));
               closeBtn.onClick();
               rebuildbtn.onClick();
               enterGame(JSON.parse(await window.protectedGlobals.readFile(`data/cd#(${i}).json`, { text: true, direct: true })), i);
