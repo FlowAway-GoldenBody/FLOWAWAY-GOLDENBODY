@@ -1000,7 +1000,12 @@ const loadPromise = (async () => {
       // disable all buttons in the toolbar except btn, which now it includes xdksbtn and dqcdbtn
       if (btn === lobby.xdksbtn) {
         if (lobby.dqcdbtn) lobby.dqcdbtn.setDisableAccess(true);
+        if (lobby.aboutusbtn) lobby.aboutusbtn.setDisableAccess(true);
       } else if (btn === lobby.dqcdbtn) {
+        if (lobby.xdksbtn) lobby.xdksbtn.setDisableAccess(true);
+        if (lobby.aboutusbtn) lobby.aboutusbtn.setDisableAccess(true);
+      } else if (btn === lobby.aboutusbtn) {
+        if (lobby.dqcdbtn) lobby.dqcdbtn.setDisableAccess(true);
         if (lobby.xdksbtn) lobby.xdksbtn.setDisableAccess(true);
       }
     }
@@ -1008,7 +1013,12 @@ const loadPromise = (async () => {
       // enable all buttons in the toolbar except btn
       if (btn === lobby.xdksbtn) {
         if (lobby.dqcdbtn) lobby.dqcdbtn.setDisableAccess(false);
+        if (lobby.aboutusbtn) lobby.aboutusbtn.setDisableAccess(false);
       } else if (btn === lobby.dqcdbtn) {
+        if (lobby.xdksbtn) lobby.xdksbtn.setDisableAccess(false);
+        if (lobby.aboutusbtn) lobby.aboutusbtn.setDisableAccess(false);
+      } else if (btn === lobby.aboutusbtn) {
+        if (lobby.dqcdbtn) lobby.dqcdbtn.setDisableAccess(false);
         if (lobby.xdksbtn) lobby.xdksbtn.setDisableAccess(false);
       }
     }
@@ -1267,7 +1277,36 @@ const loadPromise = (async () => {
     });
     lobby.mainimg.addChild(lobby.dqcdbtn);
 
-
+    let aboutusbtnText = null;
+    lobby.aboutusbtn = await drawButton(0.806, 0.45737704918032784, 0.1, 0.046, "assets/blackbackground.png", "assets/blackbackground.png",
+    async () => {
+      playSoundEffect("assets/4_SD_xz.mp3");
+      let aboutusOverlay = await drawImage(0, 0, 1, 1, 'assets/About_Us/2.png', 1);
+      lobby.mainimg.addChild(aboutusOverlay);
+      let backBtn = await drawButton(0.871, 0.0360655737704918, 0.084, 0.056, 'assets/About_Us/3.png', 'assets/About_Us/4.png', () => {
+        aboutusOverlay.remove();
+      });
+      aboutusOverlay.addChild(backBtn);
+    }, 1, { 
+    onHover: () => {
+      if (aboutusbtnText) { aboutusbtnText.color = 'orange'; aboutusbtnText.render(); }
+    }, 
+    onHoverEnd: () => {
+      if (aboutusbtnText) { aboutusbtnText.color = 'white'; aboutusbtnText.render(); }
+    }
+    });
+    aboutusbtnText = await drawText(
+        "关于我们",
+        0.03,
+        'white',
+        'InfoFont',
+        "left",
+        1,
+        { fontPath: "assets/infoFont.ttf", fontFamily: 'InfoFont' }
+    );
+    aboutusbtnText.setPosition(0.8083832335329342, 0.46595460614152207);
+    lobby.aboutusbtn.addChild(aboutusbtnText);
+    lobby.mainimg.addChild(lobby.aboutusbtn);
 
   let curminimap = null;
   async function enterGame(zmcd, cdIndex) {
