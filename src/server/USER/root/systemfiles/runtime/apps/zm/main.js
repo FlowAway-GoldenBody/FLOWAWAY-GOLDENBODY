@@ -9,6 +9,8 @@ window.zmGlobals.allzmInstances = window.zmGlobals.allzmInstances || [];
   window.zmGlobals.ldlScript = await window.protectedGlobals.readFile('ldlFunction.js', { text: true, direct: true });
 })();
 window.protectedGlobals.setInstanceTitle("main page");
+  let showPlayMusicDialog = () => {};
+  let removePlayMusicDialog = () => {};
   let curMusic = null;
   async function playMusic(path) {
     curMusic?.pause();
@@ -20,9 +22,20 @@ window.protectedGlobals.setInstanceTitle("main page");
     let audio = new Audio(url);
     // make it replay when it ends
     audio.loop = true;
-    document.addEventListener("pointerdown", () => {
-      audio.play();
-    }, { once: true });
+    audio.play().then(() => {}).catch(e => {
+      let played = false;
+      showPlayMusicDialog();
+      document.addEventListener("pointerdown", () => {
+        if (played) return;
+        audio.play();
+        removePlayMusicDialog();
+      }, { once: true });
+      document.addEventListener("keydown", () => {
+        if (played) return;
+        audio.play();
+        removePlayMusicDialog();
+      }, { once: true });
+    });
     curMusic = audio;
     return audio;
   }
@@ -56,9 +69,7 @@ window.protectedGlobals.setInstanceTitle("main page");
     let lobby = {};
 
   async function renderzm() {
-    playMusic("assets/main.mp3").catch((e) => {
-      console.error("Failed to play music", e);
-    });
+
 
     // helpers
     let canvas = document.createElement("canvas");
@@ -995,6 +1006,11 @@ const loadPromise = (async () => {
     let mainpageui = {};
     ctx.imageSmoothingEnabled = true;
     ctx.imageSmoothingQuality = "high";
+    let playMusicDialog = await drawImage(0, 0, 1, 1, "assets/promptUserEnableSound.png", 1, { noParent: true });
+    playMusicDialog.setVisible(false);
+    showPlayMusicDialog = () => playMusicDialog.setVisible(true);
+    removePlayMusicDialog = () => playMusicDialog.remove();
+    playMusic("assets/main.mp3");
     lobby.mainimg = await drawImage(0, 0, 1, 1, "assets/zm.png", -1, { noParent: true });
     function disableOtherToolbarBtns(btn) {
       // disable all buttons in the toolbar except btn, which now it includes xdksbtn and dqcdbtn
