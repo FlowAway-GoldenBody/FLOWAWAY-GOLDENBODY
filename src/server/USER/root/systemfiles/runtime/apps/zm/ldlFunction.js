@@ -124,9 +124,9 @@ exposeOutside.removehcPreview = () => {
 };
 let modeLookup = {
     1: 'qh',
-    2: 'hc',
-    3: "fj",
-    4: "dz",
+    2: 'craft',
+    3: "breakApart",
+    4: "make",
     5: "remake",
     6: "xq"
 };
@@ -205,7 +205,7 @@ bagUI.addChild(exposeOutside.hctableImg);
     });
     exposeOutside.hctableImg.addChild(hcproceedbtn);
 });
-hcbtn.ldltype = 'hc';
+hcbtn.ldltype = "craft";
 ldlBtns.push(hcbtn);
 bagUI.addChild(hcbtn);
 })();

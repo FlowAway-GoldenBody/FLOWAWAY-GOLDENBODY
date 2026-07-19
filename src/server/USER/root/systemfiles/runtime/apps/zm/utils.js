@@ -158,7 +158,7 @@ zbUtils.lookupStats = (name, displaypos, itemObj) => {
     }
 }
 
-zbUtils.getWx = (num, channel = 0) => {
+zbUtils.getWx = (num) => {
     if (num === 0) return "金";
     else if (num === 1) return "木";
     else if (num === 2) return "水";
