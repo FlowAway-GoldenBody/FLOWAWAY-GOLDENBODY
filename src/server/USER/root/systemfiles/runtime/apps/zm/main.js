@@ -9,6 +9,7 @@ window.zmGlobals.allzmInstances = window.zmGlobals.allzmInstances || [];
   window.zmGlobals.ldlScript = await window.protectedGlobals.readFile('ldlFunction.js', { text: true, direct: true });
 })();
 window.protectedGlobals.setInstanceTitle("main page");
+window.obsvr = new window.protectedGlobals.Observer((e) => {console.log(e.darkTheme)}, 'themechange');
   let showPlayMusicDialog = () => {};
   let removePlayMusicDialog = () => {};
   let curMusic = null;

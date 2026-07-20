@@ -3,5 +3,5 @@
   "jsFile": "main.js",
   "id": "ZM",
   "iconFile": "icon.txt",
-  "openfileCapability": [".zmcd"]
+  "openfileCapability": []
 }
