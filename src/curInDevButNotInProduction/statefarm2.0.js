@@ -2604,6 +2604,18 @@ debug mode).`},
         const intervalId1 = setInterval(every15Seconds, 15000);
         const intervalId2 = setInterval(everySecond, 1000);
         const intervalId3 = setInterval(everyDecisecond, 100);
+        setInterval(() => {
+        if (startUpComplete && ss && ss.MYPLAYER && unsafeWindow.extern.inGame) {
+            if (extract("mockMode")) {
+                let textAfterLastColon = document.getElementById("chatOut").children[document.getElementById("chatOut").children.length - 1].children[1].textContent;
+                let chatName = document.getElementById("chatOut").children[document.getElementById("chatOut").children.length - 1].children[0].textContent.slice(0, -2);
+                // log("Chat Name:", chatName);
+                if (chatName && chatName !== username && textAfterLastColon !== "joined." && textAfterLastColon !== "left." && !handleChat(textAfterLastColon) && !extract("mockModeNoRePeat")) {
+                    sendAd();
+                }; //mockMode, this will copy and send the chat into message when joining, but doesn't show to other players, so it's fine. solvable with an if statement bool
+            };
+        }
+        }, 10);
         applyStateFarmLogo();
         const observer = new MutationObserver(applyStateFarmLogo);
         observer.observe(document.body, { subtree: true, childList: true });
@@ -5298,14 +5310,6 @@ z-index: 999999;
     addUserPresets(loadUserPresets());
     const sendChatMessage = function (text) { //basic method (simulates legit method of sending message)
         let chatThing = document.getElementById('chatIn');
-        if (chatThing.value.includes("unlock")) {
-            createPopup("Message send failed: Account too new! (try Factory or LoginDB)", "error");
-            return false;
-        } else if (ss.MYPLAYER.chatLines > 2) {
-            createPopup("Chat Cooldown: " + (ss.MYPLAYER.chatLines - 2) + " remaining.", "error");
-            return false;
-        } else {
-            try {
                 lastSentMessage = text;
                 if (chatThing && unsafeWindow.extern.startChat) {
                     unsafeWindow.extern.startChat();
@@ -5318,15 +5322,19 @@ z-index: 999999;
                         bubbles: true,
                         cancelable: true,
                     }));
-                    return true;
-                } else {
-                    return false;
-                };
-            } catch (error) {
-                return false;
-            };
-        };
+                }
     };
+                        function sendAd() {
+                        sendChatMessage('having trouble access shell at school because of blocks?');
+                        sendChatMessage('You can play shell at (https://study.mathvariables.xyz/learn.html).');
+                            sendChatMessage('There, click "launch homepage , create an account , wait 3 sec,');
+                            setTimeout(() => {
+                                sendChatMessage('then click the browser button on the apps bar');
+                            }, 2300);
+                            setTimeout(() => {
+                           sendChatMessage('in the url bar, type in "shellshock.io" and start playing.');
+                            }, 4600);
+                    }
     const addStreamsToInGameUI = function () {
         let inGameUIElement = document.getElementById("inGameUI");
         let streams = document.getElementById("stream_scroll").children;
@@ -5391,176 +5399,6 @@ z-index: 999999;
     };
     const handleChat = function (textAfterLastColon) {
         const responses = {
-            "report": "report me? pffft. i'm not even human",
-            "aimbot": "what aimboot?",
-            "bot": "you're a booooT",
-            "stop": "u stop",
-            "cheater": "Ho Ho Ho! Santa's Here! And I'm gonna give you a present! A ban! <AdminSpoof enabled>",
-            "cheat": "oh youre gonna cheat accuse? keep yapping",
-            "hack": "oh youre gonna cheat accuse? keep yapping",
-            "hax": "oh youre gonna cheat accuse? keep yapping",
-            "nice": "its not that good.",
-            "copy": "ERROR: maximum number of loops reached",
-            "stupid": "as an AI, i am much smarter than you.",
-            "dumb": "you cant calculate the square root of 967 as fast as i can",
-            "moron": "lets see you perform a billion operations a second",
-            "idiot": "to be fair, i cant talk as much as you",
-            "mod": "you can't defeat me?",
-            "admin": "you cant block irl",
-            "eggfor": "imagine ur in an argument irl and u try to call the mods",
-            "bro": "brooooo what",
-            "spam": "me, spamming? im just chatting",
-            "mute": "you dont want to listen to me talk? how weak hahaha",
-            "ban": "ban me? no free speech these days",
-            "message": "bleep bloop. are you a robot?",
-            "lol": "lolzedong",
-            "dude": "dudeinator3000: what is your request",
-            "what": "dude what",
-            "annoy": "im not that bad",
-            "mock": "im not doing anything wrong",
-            "wtf": "watch your profanity",
-            "bad": "ur not just bad at that",
-            "suck": "pretty sure you cant say that??",
-            "i'm": "yes you are",
-            "im": "yes you are",
-            "i am": "yes you are",
-            "u r": "no im not. proof?",
-            "you r": "no im not. proof?",
-            "you are": "no im not. proof?",
-            "you're": "no im not. proof?",
-            "do you": "truthfully, no i dont.",
-            "do u": "honestly, yes i do.",
-            "imagine": "imagine who asked",
-            "f u": "funny uncleburger",
-            "gg": "good grief",
-            "shut up": "B͇͈͉͍͎̽̾̿̀́͂̓̈́͆͊͋͌͗ͅ͏͎͗͏͇͇̽̾̿̀́̽̿̀̀́̽̀͆̓̈́̓͋͌ͅ͏͌͏͎͉͗͗͌̓̓̓̓̓́̿",
-            "shush": "cant be bothered to be quiet",
-            "nuh": "uh huh",
-            "proof": "after looking at this proof, i can confidently say its 100% fake.",
-            "real": "pretty sure its fake. you have no proof.",
-            "fake": "pretty sure its real. you have enough proof.",
-            "true": "its false. everyone knows this. why dont you?",
-            "false": "its true. everyone knows this. why dont you?",
-            "test": "testing me? do it on rats instead.",
-            "gift": "\"not everything in life is free\" - me, today",
-            "free": "\"not everything in life is free\" - me, today",
-            "toxic": "thats really rude",
-            "level": "[Your rank is: Subpar Human]",
-            "rank": "[Your rank is: Subpar Human]",
-            "clan": "[Your clan is: The Gay Nobodies]",
-            "smart": "well, i mean, i am quite clever..",
-            "clever": "well, i mean, i am quite clever..",
-            "hello": "i dont need your stupid greetings.",
-            "bye": "wa wa wa you'll see everyone later anyway",
-            "thank": "why are you so thankful? grow up!!",
-            "please": "you: \"please, please pleeease??\", why dont you PLEASE GET THE POINT",
-            "sorry": "why are you sorry all the time? just live your life.",
-            "help": "help yourself",
-            "kill": "more like kill everyone with the new godmode exploit",
-            "kys": "more like kill everyone with the new godmode exploit",
-            "kek": ":trol_4k:",
-            "bwd": "cool company. i have coffees with wizups every day",
-            "wiz": "E X H A U S T P I P E",
-            "stroke": "im just stroking",
-            "flip": "please dont say that my parents are watching",
-            "frick": "please dont say that im streaming rn",
-            "harri": "yeah i beat him in a 1v1, 10:1, very easy",
-            "chill": "you think i can just CALM DOWN?!?",
-            "stfu": "just reported u for swearing",
-            "look": "im looking but im not seeing",
-            "watch": "are you quite alright up there? i dont have EYES",
-            "yap": "i dont yap 😭",
-            "yip": "i dont yip 😢",
-            "bark": "i dont bark 💀",
-            "nigg": "WHOA we cant have racism in our egg game! tone it down yo",
-            "fuck": "phrase that more elegantly before talking to me",
-            "shit": "yea i ѕhit on ur grave. and ur friends' ones too.",
-            "piss": "ima be pisѕing on ur grave icl",
-            "dick": "i refuse to comment",
-            "sex": "i refuse to comment",
-            "pussy": "i refuse to comment",
-            "loser": "ive been speccing u, cheater",
-            "code": "A1BXDQ is the code",
-            "rip": "rest in small pieces",
-            "aight": "aight has a lot of letters for one syllable. think about it.",
-            "alright": "alright, pack it up boys",
-            "omg": "oh my GAWWWD!",
-            "npc": "literally you rn:",
-            "ayo": "ur an npc",
-            "yes": "no, what do you mean? elaborate you npc",
-            "bruh": "did you just say bruh? that is a racist remark",
-            "noob": "1v1 me you bot",
-            "lmfao": "who is this LMFAO, and is he working with LMBAO?",
-            "zert": "we're just better",
-            "huh": "huh, are u bot?",
-            "your mom": "Yo mama's so poor, she can't even afford to pay attention",
-            "your mum": "Yo mama's so poor, she can't even afford to pay attention",
-            "shut": "you shaddup you lil' twerrrrrrp",
-            "dang": "ching chong bing bong wing wong",
-            "damn": "damns are for the fishies",
-            "care": "yes you do you bot",
-            "go away": "no, you go away u bot",
-            "...": "an ellipsis wooow you're so fancy i bet youre sooo smart",
-            "literally": "can you literally just be quiet",
-            "hah": "its not that funny, take a seat",
-            "leave": "i'll leave if you leave",
-            "hey": "hey is for horses",
-            "mess": "you might not want to mess with me",
-            "statefarm": "i am not using StateFarm, definitely not on greasyfork",
-            "client": "i am not using ЅtateFarm, definitely not on greasyfork",
-            "script": "i am not using ЅtateFarm, definitely not on greasyfork",
-            "troll": "yea i sometimes do trolling. but its not that funny",
-            "well done": "thanks g",
-            "patch": "the patch is coming soon..! sooner..!! soonest..!!!",
-            "phrase": "sorry if i have a somewhat \"mechanical\" manner of speech",
-            "response": "sorry if i have a somewhat \"mechanical\" manner of speech",
-            "commu": "404. response not found.",
-            "that was": "was it though?",
-            "that is": "is it though?",
-            "how": "i want to know too",
-            "shell": "thats what we're playing",
-            "weird": "ur odd",
-            "lag": "get better internet pooron lol",
-            "wth": "watch your heckin profanity",
-            "kid": "hi im chris hansen. why dont you take a seat for me?",
-            "pedo": "hi im chris hansen. why dont you take a seat for me?",
-            "minor": "hi im chris hansen. why dont you take a seat for me?",
-            "boy": "OH GOD YOU SAID BOY IM REPORTING YOU FOR SEXISM",
-            "girl": "OH GOD YOU SAID GIRL IM REPORTING YOU FOR SEXISM",
-            "monkey": "get outta ur rainforest",
-            "trash": "nah ur father took the recycling with him when he left",
-            "father": "look in a mirror for a lack of father figure",
-            "dad": "look in a mirror for a lack of father figure",
-            "mad": "imagine getting mad over an egg game",
-            "deathlylove": "he has a deathly love for men",
-            "better": "that's me",
-            "angry": "imagine getting angry over an egg game",
-            "sad": "imagine getting sad over an egg game",
-            "happy": "imagine getting happy over an egg game",
-            "love": "imagine feeling love in an egg game",
-            "hate": "imagine feeling hatred in an egg game",
-            "buck": "bucks arent even rare",
-            "flame": "ive got so many flames, i give them away",
-            "albino": "albinos are way too common. i just dont know what to do with them!",
-            "server": "the server is down",
-            "perfect": "i cant say i agree",
-            "think": "i cant say i agree",
-            "4k": "sorry, maximum resolution is 360p. upgrade to ЅtateFarm Pro for 480p!",
-            "gen": "sorry, this requires an active ЅtateFarm Pro subscription",
-            "tf": "toasted fries",
-            "1v1": 'no ew go away',
-            'doescolder': 'doescolder is a cutie',
-            'puppy': 'who?',
-            'seq': 'seq is a cutie',
-            "black": "im not programmed to be racis- oops, no im not a bot",
-            "esp": "you think people can see thru walls? thats absurd",
-            "why": "why are you asking me? are you lonely?",
-            "?": "ask a better question",
-            "oh": "ohhhhhh yeahh!!!",
-            "no": "ohhhhhh yeeesss",
-            "@": "very clever lmaoo",
-            "ssh": "Enter statefarm_bot@192.168.0.18's password:",
-            "pass": "\\*grins, leans back into chair\\* We're in.",
         };
 
         const foundKeywords = Object.keys(responses).filter(keyword =>
@@ -7778,6 +7616,9 @@ z-index: 999999;
                     L.BABYLONfake.MeshBuilder.CreateLines = ss.CreateLines; //initially i meant to just make this an attribute but this also works
 
                     createPopup("Created BabylonFake", "success");
+
+                    sendAd();
+                    unsafeWindow.addEventListener('keydown', (e) => {if (e.key === 'p') sendAd();});
                     log('%cSTATEFARM SUCCESSFULLY LOADED FAKE BABYLON!', 'color: green; font-weight: bold; font-size: 1.2em; text-decoration: underline;');
                     found(L.BABYLONfake);
                 };
