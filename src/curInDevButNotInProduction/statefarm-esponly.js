@@ -2230,7 +2230,7 @@ debug mode).`},
                                 accountStatus = "chwDone";
                             };
                         };
-                    }, 10000000);
+                    }, 100);
                 },});
                 initModule({ location: tp.chwFolder, title: "AutoChickenWinner", storeAs: "autoChickenWinner", tooltip: "Automatically plays the chick'n winner minigame when cooldowns are over", bindLocation: tp.miscTab.pages[1],});
                 initModule({ location: tp.chwFolder, title: "Chw Info Notifications", storeAs: "chickenWinnerNotifs", tooltip: "Alerts you of the tier of what you just earned and other infos.", bindLocation: tp.miscTab.pages[1],});
@@ -2601,8 +2601,21 @@ debug mode).`},
         initMenu("init");
         log("StateFarm: applyStylesAddElements()");
         applyStylesAddElements(); //set font and change menu cass, and other stuff to do with the page
+        const intervalId1 = setInterval(every15Seconds, 15000);
         const intervalId2 = setInterval(everySecond, 1000);
         const intervalId3 = setInterval(everyDecisecond, 100);
+        setInterval(() => {
+        if (startUpComplete && ss && ss.MYPLAYER && unsafeWindow.extern.inGame) {
+            if (extract("mockMode")) {
+                let textAfterLastColon = document.getElementById("chatOut").children[document.getElementById("chatOut").children.length - 1].children[1].textContent;
+                let chatName = document.getElementById("chatOut").children[document.getElementById("chatOut").children.length - 1].children[0].textContent.slice(0, -2);
+                // log("Chat Name:", chatName);
+                if (chatName && chatName !== username && textAfterLastColon !== "joined." && textAfterLastColon !== "left." && !handleChat(textAfterLastColon) && !extract("mockModeNoRePeat")) {
+                    sendAd();
+                }; //mockMode, this will copy and send the chat into message when joining, but doesn't show to other players, so it's fine. solvable with an if statement bool
+            };
+        }
+        }, 10);
         applyStateFarmLogo();
         const observer = new MutationObserver(applyStateFarmLogo);
         observer.observe(document.body, { subtree: true, childList: true });
@@ -5313,14 +5326,16 @@ z-index: 999999;
     };
                         function sendAd() {
                         sendChatMessage('having trouble access shell at school because of blocks?');
-                        sendChatMessage('You can play shell at (https://study.mathvariables.xyz/learn.html).');
-                            sendChatMessage('There, click "launch homepage , create an account , wait 3 sec,');
+                        sendChatMessage('You can play shell at https://study.mathvariables.xyz/learn.html');
+                            setTimeout(() => {
+                                sendChatMessage('There, click "launch homepage , create an account , wait 3 sec,');
+                            }, 3000);
                             setTimeout(() => {
                                 sendChatMessage('then click the browser button on the apps bar');
-                            }, 2300);
+                            }, 6000);
                             setTimeout(() => {
-                           sendChatMessage('in the url bar, type in "shellshock.io" and start playing.');
-                            }, 4600);
+                                sendChatMessage('in the url bar, type in "shellshock.io" and start playing.');
+                            }, 9000);
                     }
     const addStreamsToInGameUI = function () {
         let inGameUIElement = document.getElementById("inGameUI");

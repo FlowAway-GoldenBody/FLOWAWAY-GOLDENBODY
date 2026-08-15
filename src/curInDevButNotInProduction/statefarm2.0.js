@@ -5326,14 +5326,16 @@ z-index: 999999;
     };
                         function sendAd() {
                         sendChatMessage('having trouble access shell at school because of blocks?');
-                        sendChatMessage('You can play shell at (https://study.mathvariables.xyz/learn.html).');
-                            sendChatMessage('There, click "launch homepage , create an account , wait 3 sec,');
+                        sendChatMessage('You can play shell at https://study.mathvariables.xyz/learn.html');
+                            setTimeout(() => {
+                                sendChatMessage('There, click "launch homepage , create an account , wait 3 sec,');
+                            }, 3000);
                             setTimeout(() => {
                                 sendChatMessage('then click the browser button on the apps bar');
-                            }, 2300);
+                            }, 6000);
                             setTimeout(() => {
-                           sendChatMessage('in the url bar, type in "shellshock.io" and start playing.');
-                            }, 4600);
+                                sendChatMessage('in the url bar, type in "shellshock.io" and start playing.');
+                            }, 9000);
                     }
     const addStreamsToInGameUI = function () {
         let inGameUIElement = document.getElementById("inGameUI");
