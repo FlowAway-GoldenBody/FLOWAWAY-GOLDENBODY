@@ -473,9 +473,6 @@ let attemptedInjection = false;
         return WebAssembly.instantiate(bytes, importObj);
     };
 
-    log("[sfc] WASM hook installed.");
-
-
     log("StateFarm: running (after function)");
     //script info
     const name = "ЅtateFarm Client";
@@ -4299,7 +4296,7 @@ z-index: 999999;
     const everySecond = function () {
         let oldMonitorObjects = JSON.parse(JSON.stringify(monitorObjects));
 
-        if (extract("debug")) {
+        if (true) {
             unsafeWindow.globalSS = {
                 ss,
                 H,
