@@ -6,14 +6,8 @@
   "allAppArrayString": "shellnoob-noob2",
   "jsFile": "script.js",
   "iconFile": "icon.txt",
-  "backgroundWorker": true,
   "headless": true,
+  "backgroundWorker": true,
   "headlessJsFile": "headlessScript.js",
-  "openfileCapability": [],
-  "cmd": [ 
-    {
-      "name": "logA",
-      "src": "/test/file.txt"
-    }
-  ]
+  "openfileCapability": []
 }
