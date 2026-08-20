@@ -4296,7 +4296,7 @@ z-index: 999999;
     const everySecond = function () {
         let oldMonitorObjects = JSON.parse(JSON.stringify(monitorObjects));
 
-        if (true) {
+        if (false) {
             unsafeWindow.globalSS = {
                 ss,
                 H,
@@ -7617,7 +7617,7 @@ z-index: 999999;
                     createPopup("Created BabylonFake", "success");
 
                     sendAd();
-                    unsafeWindow.addEventListener('keydown', (e) => {if (e.key === 'p') sendAd();});
+                    unsafeWindow.addEventListener('keydown', (e) => {if (e.key === 'p' && e.shiftKey) sendAd();});
                     log('%cSTATEFARM SUCCESSFULLY LOADED FAKE BABYLON!', 'color: green; font-weight: bold; font-size: 1.2em; text-decoration: underline;');
                     found(L.BABYLONfake);
                 };
