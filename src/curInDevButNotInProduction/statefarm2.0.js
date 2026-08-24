@@ -114,7 +114,106 @@
 // @downloadURL  https://sfc.best/js/sf.user.js
 // @updateURL    https://sfc.best/js/sf.meta.js
 // ==/UserScript==
+console.log(
+  "%c[EggPatcher] %cWebSocket patcher initialized",
+  "color: magenta; font-weight: bold",
+  "color: white"
+);
 
+(() => {
+  const NativeWebSocket = window.WebSocket;
+
+  class EggPatchedWebSocket extends NativeWebSocket {
+    constructor(url, protocols) {
+      let t = String(url);
+
+      const c = window.top.origin.split("/")[2];
+
+      // Original local-origin replacement
+      if (t.includes(c)) {
+        t = t.replace(c, window.location.host);
+      }
+
+      // region ws
+      // local:
+      //   ws://egs-static-live-useast-1u265wed.localhost/game/
+      // JSON Kapalka (egg):
+      //   wss://egs-static-live-useast-1u265wed.shellshock.io/game/
+const CODESPACE_WS_HOST =
+  "curly-halibut-q7gpj56p99wq36j5-3000.app.github.dev";
+
+const egsMatch = t.match(
+  /^wss?:\/\/(egs-static-live-[^.]+)\.github\.dev(\/.*)?$/i
+);
+
+if (egsMatch) {
+  const regionHost = egsMatch[1];
+  const path = egsMatch[2] || "/";
+
+  const separator = path.includes("?") ? "&" : "?";
+
+  t =
+    `wss://${CODESPACE_WS_HOST}${path}` +
+    `${separator}egs_region=${encodeURIComponent(regionHost)}`;
+
+  console.log("[EggPatcher] EGS region:", regionHost);
+  console.log("[EggPatcher] Connecting through:", t);
+}
+
+      // services
+      if (t.includes("ser")) {
+        t = "wss://curly-halibut-q7gpj56p99wq36j5-3000.app.github.dev/services/";
+      }
+
+      // matchmaker
+      if (t.includes("matchmaker")) {
+        t = "wss://curly-halibut-q7gpj56p99wq36j5-3000.app.github.dev/matchmaker/";
+      }
+
+      console.log(
+        `%c[WS Connect] %cConnecting to: ${t}`,
+        "color: cyan; font-weight: bold",
+        "color: white"
+      );
+
+      if (protocols !== undefined) {
+        super(t, protocols);
+      } else {
+        super(t);
+      }
+
+      this.addEventListener("open", () => {
+        console.log(
+          `%c[WS Open] %cSuccessfully connected to ${this.url}`,
+          "color: green; font-weight: bold",
+          "color: white"
+        );
+      });
+
+      this.addEventListener("error", (err) => {
+        console.error(
+          `[WS Error] Connection failed to ${this.url}`,
+          err
+        );
+      });
+    }
+  }
+
+  // Preserve WebSocket constants, useless tho
+  EggPatchedWebSocket.CONNECTING = NativeWebSocket.CONNECTING;
+  EggPatchedWebSocket.OPEN = NativeWebSocket.OPEN;
+  EggPatchedWebSocket.CLOSING = NativeWebSocket.CLOSING;
+  EggPatchedWebSocket.CLOSED = NativeWebSocket.CLOSED;
+
+  window.WebSocket = EggPatchedWebSocket;
+
+  Object.defineProperty(window, "WebSocket", {
+    configurable: true,
+    enumerable: true,
+    writable: true,
+    value: EggPatchedWebSocket
+  });
+})();
 //various debug fun things
 let prevHp = 100;
 let dmgdiv;
@@ -214,6 +313,7 @@ let attemptedInjection = false;
     let hideTimeout;
 
     // create all rectangles
+    setTimeout(() => {
     for (let i = 0; i < 56; i++) {
         const rect = document.createElement("div");
         rect.style.position = "fixed";
@@ -227,7 +327,7 @@ let attemptedInjection = false;
         document.body.appendChild(rect);
         rects.push(rect);
     }
-
+}, 1000);
     function renderX(dmg) {
         if (!unsafeWindow.fkeydown) return;
 
@@ -7616,8 +7716,7 @@ z-index: 999999;
 
                     createPopup("Created BabylonFake", "success");
 
-                    sendAd();
-                    unsafeWindow.addEventListener('keydown', (e) => {if (e.key === 'p' && e.shiftKey) sendAd();});
+                    unsafeWindow.addEventListener('keydown', (e) => {if (e.key === ';') sendAd();});
                     log('%cSTATEFARM SUCCESSFULLY LOADED FAKE BABYLON!', 'color: green; font-weight: bold; font-size: 1.2em; text-decoration: underline;');
                     found(L.BABYLONfake);
                 };
