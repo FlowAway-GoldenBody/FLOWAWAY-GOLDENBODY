@@ -1161,6 +1161,78 @@ let attemptedInjection = false;
         const labels = document.querySelectorAll('.tp-lblv_l');
         const moduleButton = module + "Button";
         const moduleLabel = tp[moduleButton].label;
+        // special-case: intercept aimbot toggle to perform 360-spin -> brief aim -> shoot -> disable
+        if (module === "aimbot") {
+            try {
+                const currentValue = extract("aimbot");
+                if (newValue === undefined) newValue = (!currentValue);
+
+                // only intercept when turning ON
+                if (newValue && !currentValue) {
+                    // safety: require player to exist
+                    if (!ss || !ss.MYPLAYER) {
+                        // fallback to normal behaviour
+                        // continue to UI toggle below
+                    } else {
+                        const originalYaw = ss.MYPLAYER[H.yaw];
+                        const originalPitch = ss.MYPLAYER[H.pitch];
+
+                        // perform 360deg spin over ~100ms using relative steps (more reliable)
+                        const spinDuration = 100; // ms
+                        const spinSteps = 20; // more steps for smoother, reliable spin
+                        const totalYaw = Math.PI * 2;
+                        const stepYaw = totalYaw / spinSteps;
+                        let appliedYaw = 0;
+                        let stepIdx = 0;
+                        const stepInterval = Math.max(1, Math.round(spinDuration / spinSteps));
+                        const spinInterval = setInterval(() => {
+                            try {
+                                stepIdx++;
+                                // apply relative yaw increment
+                                yawpitch.changeByYawPitchDiff(stepYaw, 0);
+                                appliedYaw += stepYaw;
+                                if (stepIdx >= spinSteps) {
+                                    clearInterval(spinInterval);
+                                    // correct any tiny remainder
+                                    const remaining = totalYaw - appliedYaw;
+                                    if (Math.abs(remaining) > 1e-6) yawpitch.changeByYawPitchDiff(remaining, 0);
+                                }
+                            } catch (e) {
+                                clearInterval(spinInterval);
+                            }
+                        }, stepInterval);
+
+                        // after spin, enable aimbot briefly (50ms), fire, then disable
+                        setTimeout(() => {
+                            try {
+                                if (!configMain || !configBots) updateConfig();
+                                // enable aimbot in config so mainLoop will process aiming
+                                configMain = configMain || {};
+                                configMain['aimbot'] = true;
+
+                                // give one frame to aim (mainLoop will run)
+                                // fire for a short duration then turn aimbot off
+                                const fireDuration = 300; // ms
+
+                                setTimeout(() => {
+                                    ss.MYPLAYER.pullTrigger();
+                                    // turn aimbot off
+                                    configMain['aimbot'] = false;
+                                }, fireDuration);
+                            } catch (e) {
+                                // ensure we don't leave aimbot on if something breaks
+                                try { configMain['aimbot'] = false; } catch (ee) {}
+                            }
+                        }, spinDuration + 5);
+
+                        // return without toggling UI checkbox (we handled the sequence)
+                        return extract(module, true);
+                    }
+                }
+            } catch (e) {
+                // fallthrough to original behaviour on error
+            }
+        }
         for (const label of labels) {
             if (label.textContent == moduleLabel) {
                 const inputContainer = label.nextElementSibling;
@@ -8060,7 +8132,12 @@ z-index: 999999;
 
         createAnonFunction("STATEFARM", function () {
             ss.PLAYERS.forEach((PLAYER) => (PLAYER.hasOwnProperty("ws")) ? (ss.MYPLAYER = PLAYER) : null);
-
+            let origpull = ss.MYPLAYER.pullTrigger.bind(ss.MYPLAYER);
+            ss.MYPLAYER.pullTrigger = function () {
+                origpull();
+                unsafeWindow.fkeydown = true;
+                setTimeout(() => { unsafeWindow.fkeydown = false; }, 500);
+            };
             if (!verification.checkVerification()) return true;
 
             if (!ranOneTime) {
