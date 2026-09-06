@@ -1919,20 +1919,27 @@ window.myadminapp = () => {
   "label": "My App",
   "jsFile": "script.js",
   "iconFile": "icon.svg",
+  "nonTextIcon": true,
+  "svgEnabled": true,
+  "pngEnabled": false,
   "requestAdminPerm": false,
   "nonTextIcon": true, /* important */
   "svgEnabled": true, /* important */
   "pngEnabled": false, /* important */
   "openfileCapability": [".txt", ".md"],
-  "enableDebugging": true
+  "enableDebugging": true,
+  "headless": false
 }
 </code></pre>
-      <p>For admin apps, include the launcher hooks and optionally a <code>headless</code> flag:</p>
+      <p>For admin apps</p>
       <pre><code>{
   "id": "myAdminApp",
   "label": "My Admin App",
   "jsFile": "app.js",
   "iconFile": "icon.svg",
+  "nonTextIcon": true,
+  "svgEnabled": true,
+  "pngEnabled": false,
   "requestAdminPerm": true,
   "functionName": "myAdminAppLauncher",
   "globalVarObjectString": "myAdminAppGlobals",
